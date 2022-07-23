@@ -1,3 +1,4 @@
+import React from 'react'
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Chat from './pages/Chat';
@@ -6,6 +7,8 @@ import Follow from './pages/Follow';
 import Map from './pages/Map';
 import New from './pages/New';
 import Home from './pages/Home';
+import Post from './post'
+
 
 
 function App() {
@@ -23,6 +26,8 @@ function App() {
           <Route path="/Map" element={<Map />} />
           <Route path="/New" element={<New />} />
         </Routes>
+              <Post />
+
         <nav className='bottome-nav'>
           <a class="nav-btn" href={"/"}>
             <img class="nav-icon" src="/icons/home.svg" />

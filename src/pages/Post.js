@@ -2,6 +2,11 @@ import { useState } from "react";
 
 const Post = () => {
     const [comment, setComment] = useState("");
+    const [comments, setComments] = useState([]);
+    const [count, setCount] = useState(0);
+    const [isLike, setIsLike] = useState(false)
+
+    console.log(isLike)
     return (
         <div className="post">homepage
             <div className="post_head">
@@ -27,7 +32,7 @@ const Post = () => {
 
             </div>
             <div className="left_icons">
-                <img src="/icons/heart.svg" />
+                <img onClick={() => setIsLike(!isLike)} src={isLike ? "/icons/like.svg" : "/icons/heart.svg"} />
                 <img src="/icons/message.svg" />
                 <img src="/icons/share.svg" />
             </div>
@@ -42,13 +47,29 @@ const Post = () => {
             </div>
             <div className="comments">
                 <div className="total_comments">
-                    see all 0 comments
+                    see all {count} comments
                 </div>
                 <input
                     className="input_comments"
                     value={comment}
-                    onChange={(e) => setComment(e.target.value)}
+                    onChange={(e) => {
+                        setComment(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                        // console.log(e);
+                        if (e.key === "Enter") {
+                            setComments([...comments, comment])
+                            setComment("")
+                            setCount(count + 1)
+                        }
+                    }}
                     type="text" />
+                <div>
+                    <ul>
+                        {comments.map((comment) => <li>{comment}</li>
+                        )}
+                    </ul>
+                </div>
             </div>
         </div>
     );

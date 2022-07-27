@@ -17,7 +17,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <h2>
-          <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' border='0' /></a>
+          <a href="/"><img className="head_logo" src='https://ifh.cc/g/9qtKfn.png' border='0' /></a>
         </h2>
         <Routes>
           <Route path="/" element={<Post />} />
@@ -27,21 +27,21 @@ function App() {
           <Route path="Profile" element={<Profile />} />
         </Routes>
         <div>
-          <nav>
+          <nav className="nav_icon">
             <NavLink to="/">
-              <img class="nav-icon" src="/icons/home.svg" />
+              <img className="home_icon" src="/icons/home.svg" />
             </NavLink>
             <NavLink to="Map">
-              <img class="nav-icon" src="icons/locationicon.svg" />
+              <img className="map_icon" src="icons/locationicon.svg" />
             </NavLink>
             <NavLink to="Create">
-              <img class="nav-icon" src="icons/post-new.svg" />
+              <img className="post_icon" src="icons/post-new.svg" />
             </NavLink>
             <NavLink to="Chat">
-              <img class="nav-icon" src="icons/txt.svg" />
+              <img className="chat_icon" src="icons/txt.svg" />
             </NavLink>
             <NavLink to="Profile">
-              <img class="nav-icon" src="icons/profile.svg" />
+              <img className="profile_icon" src="icons/profile.svg" />
             </NavLink>
           </nav>
         </div>

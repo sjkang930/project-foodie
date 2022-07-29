@@ -16,16 +16,23 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+
+
         <h2>
           <a href="/"><img className="head_logo" src='https://ifh.cc/g/9qtKfn.png' border='0' /></a>
         </h2>
-        <Routes>
-          <Route path="/" element={<Post />} />
-          <Route path="Map" element={<Map />} />
-          <Route path="Create" element={<Create />} />
-          <Route path="Chat" element={<Chat />} />
-          <Route path="Profile" element={<Profile />} />
-        </Routes>
+
+        <div className="posts">
+
+
+          <Routes>
+            <Route path="/" element={<Post />} />
+            <Route path="Map" element={<Map />} />
+            <Route path="Create" element={<Create />} />
+            <Route path="Chat" element={<Chat />} />
+            <Route path="Profile" element={<Profile />} />
+          </Routes>
+        </div>
         <div>
           <nav className="nav_icon">
             <NavLink to="/">

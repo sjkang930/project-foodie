@@ -1,14 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap");
 
-body {
+.posts {
   /* background-color: #f6f6f6; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Nanum Pen Script";
-  min-height: 100vh;
   margin: 0px;
 }
+
+@media (max-width: 600px) {
+  .post img{
+    float: none;
+    width: 100%;
+    background-color: red;
+    margin: 10px;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 600px) {
+    .post img {
+      width: 600;
+      height: 400;
+    }
+  }
 
 .post {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

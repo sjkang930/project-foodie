@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios'
 
 const Post = () => {
     const [comment, setComment] = useState("");
@@ -6,6 +7,11 @@ const Post = () => {
     const [count, setCount] = useState(0);
     const [isLike, setIsLike] = useState(false);
 
+    const submit = async (event) => {
+        event.preventDefault()
+        const result = await axios.post('/posts', comment)
+        console.log(result)
+    }
     return (
         <div className="post">
             <div className="post_head">
@@ -75,22 +81,23 @@ const Post = () => {
                 <div className="total_comments">
                     see all {count} comments
                 </div>
-
-                <input
-                    className="input_comments"
-                    placeholder="Add a Comment..."
-                    value={comment}
-                    onChange={(e) => {
-                        setComment(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            setComments([...comments, comment])
-                            setComment("")
-                            setCount(count + 1)
-                        }
-                    }}
-                    type="text" />
+                <form onSubmit={submit}>
+                    <input
+                        className="input_comments"
+                        placeholder="Add a Comment..."
+                        value={comment}
+                        onChange={(e) => {
+                            setComment(e.target.value);
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                setComments([...comments, comment])
+                                setComment("")
+                                setCount(count + 1)
+                            }
+                        }}
+                        type="text" />
+                </form>
                 <div>
                     <ul>
                         {comments.map((comment) => <li className="comment_list">{comment}</li>

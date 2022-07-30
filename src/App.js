@@ -17,11 +17,12 @@ function App() {
     <BrowserRouter>
       <div className="App">
 
-
-        <h2>
-          <a href="/"><img className="head_logo" src='https://ifh.cc/g/9qtKfn.png' border='0' /></a>
-        </h2>
-
+        <header>
+          <h2>
+            <a href="/"><img className="head_logo" src='https://ifh.cc/g/9qtKfn.png' border='0' /></a>
+          </h2>
+        </header>
+        
         <div className="posts">
 
 

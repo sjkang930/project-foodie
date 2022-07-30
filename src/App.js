@@ -11,7 +11,7 @@ import Create from './pages/Create';
 import Post from './pages/Post';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-
+import axios from 'axios';
 function App() {
   return (
     <BrowserRouter>

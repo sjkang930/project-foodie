@@ -33,8 +33,8 @@ const Post = () => {
                 </div>
             </div>
             <div className="picture">
-                <div className="user_pic">
-                    <img src="/foods/berries-2277__480.jpeg" />
+                <div >
+                    <img className="user_pic" src="/foods/berries-2277__480.jpeg" />
                 </div>
             </div>
 
@@ -93,7 +93,7 @@ const Post = () => {
                     type="text" />
                 <div>
                     <ul>
-                        {comments.map((comment) => <li>{comment}</li>
+                        {comments.map((comment) => <li className="comment_list">{comment}</li>
                         )}
                     </ul>
                 </div>

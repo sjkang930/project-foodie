@@ -33,27 +33,29 @@ function App() {
             <Route path="Profile" element={<Profile />} />
           </Routes>
         </div>
-        <div>
-          <nav className="nav_icon">
-            <NavLink to="/">
-              <img className="home_icon" src="/icons/home.svg" />
-            </NavLink>
-            <NavLink to="Map">
-              <img className="map_icon" src="icons/locationicon.svg" />
-            </NavLink>
-            <NavLink to="Create">
-              <img className="post_icon" src="icons/post-new.svg" />
-            </NavLink>
-            <NavLink to="Chat">
-              <img className="chat_icon" src="icons/txt.svg" />
-            </NavLink>
-            <NavLink to="Profile">
-              <img className="profile_icon" src="icons/profile.svg" />
-            </NavLink>
-          </nav>
-        </div>
+
       </div>
+
+      <nav className="nav_icon">
+        <NavLink to="/">
+          <img className="home_icon" src="/icons/home.svg" />
+        </NavLink>
+        <NavLink to="Map">
+          <img className="map_icon" src="icons/locationicon.svg" />
+        </NavLink>
+        <NavLink to="Create">
+          <img className="post_icon" src="icons/post-new.svg" />
+        </NavLink>
+        <NavLink to="Chat">
+          <img className="chat_icon" src="icons/txt.svg" />
+        </NavLink>
+        <NavLink to="Profile">
+          <img className="profile_icon" src="icons/profile.svg" />
+        </NavLink>
+      </nav>
+
     </BrowserRouter>
+
   );
 }
 

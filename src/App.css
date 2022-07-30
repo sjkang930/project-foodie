@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap");
 
-.posts {
+#root{
+    width: 100%;
+}
+.App{
+    margin-left: 350px;
+    margin-right: 350px;
+}
+
+body {
   /* background-color: #f6f6f6; */
   display: flex;
   justify-content: center;
@@ -9,22 +17,22 @@
   margin: 0px;
 }
 
-@media (max-width: 600px) {
-  .post img{
-    float: none;
-    width: 100%;
-    background-color: red;
-    margin: 10px;
-    margin-left: auto;
-  }
+.post .user_pic {
+  float: none;
+  width: 100%;
+  margin-left: auto;
+  max-width: 600;
+  max-height: 400;
 }
 
-@media (min-width: 600px) {
-    .post img {
-      width: 600;
-      height: 400;
-    }
-  }
+h2 a {
+  display: flex;
+  justify-content: center;
+}
+
+a img.head_logo {
+  width: 50%;
+}
 
 .post {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -38,7 +46,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 250px;
 }
 
 .left_col {
@@ -70,19 +77,16 @@
   padding-right: 20px;
 }
 
-/* img {
-  border-radius: 5px 5px 5px 5px;
-} */
-
-.nav_icon {
+ .nav_icon {
   display: flex;
-  justify-content: space-between;
-  /* position: sticky; */
+  justify-content: space-evenly;
+  position: sticky;
+  bottom: 0;
   padding-left: 10px;
-  padding-right: 10px;
   padding-top: 20px;
   padding-bottom: 10px;
-  /* background-color: #f5f5f5; */
+  width: 100%;
+  background-color: #f5f5f5;
 }
 
 .second_icon {
@@ -98,27 +102,22 @@
   justify-content: space-around;
   padding-right: 20px;
   padding-bottom: 20px;
-  /* background-color: blue; */
 }
 
 .second_icon .left_icons .likes {
   padding-right: 10px;
-  /* background-color: red; */
 }
+
 .second_icon .left_icons .message {
   padding-right: 10px;
-  /* background-color: red; */
 }
+
 .second_icon .left_icons .share {
   padding-right: 10px;
-  /* background-color: red; */
 }
 
 .second_icon .right_icon {
-  /* width: 100%; */
   height: 25px;
-  /* background-color: blue; */
-  /* font-size: 0.73em */
   padding-right: 10px;
 }
 
@@ -127,6 +126,7 @@
   font-size: 18px;
   display: flex;
 }
+
 .user_name_description .user_name {
   padding-right: 10px;
   color: #1a5e63;
@@ -139,10 +139,13 @@
 
 .input_comments {
   padding-left: 50px;
-  /* background-color: blue; */
   font-family: "Nanum Pen Script";
   font-size: 20px;
   width: 85%;
   border: none;
-  color: #00bfb2;
+  outline: none;
+}
+
+ul {
+  list-style-type: none;
 }

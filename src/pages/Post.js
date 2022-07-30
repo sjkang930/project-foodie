@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from 'axios'
+// import axios from 'axios'
 
 const Post = () => {
     const [comment, setComment] = useState("");
@@ -9,8 +9,8 @@ const Post = () => {
 
     const submit = async (event) => {
         event.preventDefault()
-        const result = await axios.post('/posts', comment)
-        console.log(result)
+        // const result = await axios.post('/posts', comment)
+        // console.log(result)
     }
     return (
         <div className="post">

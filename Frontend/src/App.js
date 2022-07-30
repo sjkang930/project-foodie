@@ -12,6 +12,7 @@ import Post from './pages/Post';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -22,7 +23,7 @@ function App() {
             <a href="/"><img className="head_logo" src='https://ifh.cc/g/9qtKfn.png' border='0' /></a>
           </h2>
         </header>
-        
+
         <div className="posts">
 
 

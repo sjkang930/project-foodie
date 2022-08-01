@@ -2,16 +2,17 @@ const express = require('express')
 
 const app = express()
 
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()) // To parse the incoming requests with JSON payloads
 
 app.get('/posts', (req, res) => {
 
 })
 
 app.post('/posts', (req, res) => {
-    const { comment } = req.body
-    console.log(req.body)
-    console.log(comment)
+
+    console.log(req.body.comment)
+
 })
 
 const port = process.env.PORT || 8080

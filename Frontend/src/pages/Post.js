@@ -17,6 +17,7 @@ const Post = () => {
 
     const submit = async (event) => {
         event.preventDefault()
+
         setComments([...comments, comment])
         setComment("")
         setCount(count + 1)
@@ -99,7 +100,9 @@ const Post = () => {
                             setComment(e.target.value);
                         }}
                         type="text" />
+
                     <button className="comment_post">Post</button>
+
                 </form>
                 
                 <div>

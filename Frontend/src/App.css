@@ -24,6 +24,9 @@ body {
   max-width: 600;
   max-height: 400;
 }
+@media screen  {
+  
+}
 
 h2 a {
   display: flex;

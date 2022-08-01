@@ -10,6 +10,7 @@ const Post = () => {
     const submit = async (event) => {
         event.preventDefault()
         const result = await axios.post('/posts', comment)
+        debugger
         console.log(result)
     }
     return (
@@ -97,6 +98,8 @@ const Post = () => {
                             }
                         }}
                         type="text" />
+
+                    <button>+</button>
                 </form>
                 <div>
                     <ul>

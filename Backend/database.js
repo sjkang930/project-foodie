@@ -25,12 +25,19 @@ export async function getPost(id) {
     return rows[0]
 }
 
-export async function createPost(comment) {
+export async function createPost(description, filename) {
     const [result] = await pool.query(`
-    INSERT INTO posts (comment)
-    VALUES(?)
-    `, [comment])
+    INSERT INTO posts (description, filename)
+    VALUES(?,?)
+    `, [description, filename])
     const id = result.insertId
     return getPost(id)
+}
+
+export async function createComment(comment, id) {
+    let query = "UPDATE posts SET comment = :comment WHERE id = :id";
+    let params = { comment: comment, id: id }
+    const [result] = await database.query(query, params)
+    return result
 }
 

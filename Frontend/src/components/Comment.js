@@ -1,3 +1,4 @@
+import React from 'react';
 const Commnet = () => {
     return (
         <div className="Comment">

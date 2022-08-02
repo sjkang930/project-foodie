@@ -8,7 +8,7 @@ dotenv.config()
 app.use(express.json());
 
 const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
+const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
     const posts = await getPosts()
@@ -25,11 +25,17 @@ app.post('/posts', async (req, res) => {
     const post = await createPost(comment)
     res.send(post)
 })
+app.get('create', async (req, res) => {
+
+})
 
 app.post('/create', upload.single('image'), async (req, res) => {
+    const { fieldname, path } = req.file
+    const description = req.body.description
     console.log("req.body", req.body)
     console.log("req.file", req.file)
-    res.send(req.file)
+    res.send("jjj")
+
 })
 
 app.use(function (err, req, res, next) {

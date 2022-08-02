@@ -15,6 +15,7 @@
 //     })
 // })
 
+
 // app.post('/posts', (req, res) => {
 //     const comment = req.body.comment
 //     database.createPost(comment, (error, insertId) => {
@@ -28,8 +29,8 @@
 //         })
 //     })
 // })
-
 // const port = process.env.PORT || 8080
 // app.listen(port, () => {
 //     console.log(`listening on port ${port}`)
 // })
+

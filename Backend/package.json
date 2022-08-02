@@ -5,6 +5,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
+
     "dev": "npx nodemon app.js",
     "start": "node server.js"
   },

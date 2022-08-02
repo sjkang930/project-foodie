@@ -1,22 +1,29 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from 'react';
 
 const Create = () => {
-    const [file, setFile] = useState("")
-    const [caption, setCaption] = useState("")
+    const [file, setFile] = useState()
+    const [description, setDescription] = useState("")
 
     const submit = async event => {
         event.preventDefault()
-        const formData = new FormData();
-        formData.append("imgae", file)
-        formData.append("caption", caption)
-        await axios.post("/create", { formData }, { headers: { 'Content-Type': 'multipart/form-data' } })
+        const data = new FormData()
+        data.append('image', file)
+        data.append('description', description)
+        const result = await axios.post('/create', data)
+        console.log(result)
     }
     return (
         <div className="Create">
             <form onSubmit={submit}>
-                <input onChange={e => setFile(e.target.files[0])} type="file" accept="image/*"></input>
-                <input value={caption} onChange={(e) => setCaption(e.target.value)} type="text" placeholder="description"></input>
+                <input filename={file} onChange={(e) => {
+                    setFile(e.target.files[0])
+                }}
+                    type="file"
+                    accept="image/*">
+
+                </input>
+                <input onChange={(e) => setDescription(e.target.value)} type="text" placeholder="description"></input>
                 <button type="submit">Submit</button>
             </form>
 

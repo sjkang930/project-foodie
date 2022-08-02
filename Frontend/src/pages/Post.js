@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
 
 const Post = () => {
@@ -12,8 +12,8 @@ const Post = () => {
         (async () => {
             const result = await axios.get('/posts')
             setPosts(result.data)
-          
-        }) ()
+
+        })()
     }, [])
 
     const submit = async (event) => {
@@ -105,7 +105,7 @@ const Post = () => {
                     <button className="comment_post">Post</button>
 
                 </form>
-                
+
                 <div>
                     <ul>
                         {posts.map(post => <li key={post.id} className="comment_list">{post.comment}</li>)}

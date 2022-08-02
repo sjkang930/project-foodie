@@ -11,7 +11,8 @@ const Post = () => {
     useEffect(() => {
         (async () => {
             const result = await axios.get('/posts')
-            setPosts(result.data.posts)
+            setPosts(result.data)
+          
         }) ()
     }, [])
 

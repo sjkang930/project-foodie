@@ -35,9 +35,9 @@ export async function createPost(description, filename) {
 }
 
 export async function createComment(comment, id) {
-    let query = "UPDATE posts SET comment = :comment WHERE id = :id";
-    let params = { comment: comment, id: id }
-    const [result] = await database.query(query, params)
+    let query = "UPDATE posts SET comment = ? WHERE id = ?";
+    let params = [comment, id]
+    const [result] = await pool.query(query, params)
     return result
 }
 

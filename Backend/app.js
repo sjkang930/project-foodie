@@ -2,6 +2,12 @@ import express from 'express'
 import { getPosts, getPost, createComment, createPost } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
+import fs from 'fs'
+import path from 'path'
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 dotenv.config();
@@ -11,6 +17,7 @@ const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
     const posts = await getPosts()
+    console.log(posts)
     res.send(posts)
 })
 
@@ -26,6 +33,13 @@ app.post('/posts', async (req, res) => {
     res.send(post)
 })
 
+app.get('/images/:filename', (req, res) => {
+    const filename = req.params.filename
+    const readStream = fs.createReadStream(path.join(__dirname, 'uploads', filename))
+    readStream.pipe(res)
+})
+
+
 app.get('create', async (req, res) => {
 
 })
@@ -33,12 +47,15 @@ app.get('create', async (req, res) => {
 app.post('/create', upload.single('image'), async (req, res) => {
     const { filename, path } = req.file
     const description = req.body.description
-    const image_url = `/uploads/${filename}`
+    const image_url = `/images/${filename}`
     const post = await createPost(description, image_url)
     console.log("req.body", req.body)
     console.log("req.file", req.file)
     console.log(post)
-    res.send("jjj")
+    res.send({
+        description,
+        image_url
+    })
 })
 
 app.use(function (err, req, res, next) {

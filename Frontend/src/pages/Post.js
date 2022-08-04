@@ -7,11 +7,14 @@ const Post = () => {
     const [count, setCount] = useState(0);
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([])
+    const [id, setId] = useState("")
+
 
     useEffect(() => {
         (async () => {
             const result = await axios.get('/posts')
             setPosts(result.data)
+
         })()
     }, [])
 
@@ -20,18 +23,12 @@ const Post = () => {
         setComments([...comments, comment])
         setComment("")
         setCount(count + 1)
-        const result = await axios.post('/posts', { comment })
-        setPosts(result.data, ...posts)
+        const result = await axios.post('/posts', { comment, id})
     }
     return (
         <div className="posts">
-
-
             {posts.map(post => (
                 <div className="post" >
-
-
-
                     <> <section className="post_head">
                         <div className="left_col">
                             <div className="profile">
@@ -100,8 +97,10 @@ const Post = () => {
                                     onChange={(e) => {
                                         setComment(e.target.value);
                                     }}
-                                    type="text" />
-                                <button className="comment_post">Post</button>
+                                    type="text"
+
+                                />
+                                <button className="comment_post" onClick={() => setId(post.id)}>Post</button>
                             </form>
 
                             <div>
@@ -109,11 +108,12 @@ const Post = () => {
                                     {posts.map(it => <li key={it.id} className="comment_list">{it.comment}</li>)}
                                     {comments.map((comment, index) => <li key={index} className="comment_list">{comment}</li>
                                     )}
+
                                 </ul>
                             </div>
                         </section></>
                 </div >
-                ))}
+            ))}
         </div>
     );
 

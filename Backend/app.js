@@ -2,7 +2,7 @@ import express from 'express'
 import { getPosts, getPost, createComment, createPost } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
-import fs from 'fs'
+import fs, { copyFileSync } from 'fs'
 import path from 'path'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -28,7 +28,8 @@ app.get('/posts/:id', async (req, res) => {
 })
 
 app.post('/posts', async (req, res) => {
-    const { comment } = req.body
+    const { comment, id} = req.body
+    console.log(comment, id)
     const post = await createComment(comment, id)
     res.send(post)
 })

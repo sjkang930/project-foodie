@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
     const [file, setFile] = useState()
     const [description, setDescription] = useState("")
+    const navigate = useNavigate();
 
     const submit = async event => {
         event.preventDefault()
@@ -11,6 +13,7 @@ const Create = () => {
         data.append('image', file)
         data.append('description', description)
         const result = await axios.post('/create', data)
+        navigate('/', { replace: true });
         console.log(result)
     }
     return (

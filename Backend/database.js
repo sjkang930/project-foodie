@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 }).promise()
 
 export async function getPosts() {
-    const [rows] = await pool.query(`SELECT * FROM posts`)
+    const [rows] = await pool.query(`SELECT * FROM posts ORDER BY id DESC;`)
     return rows
 }
 

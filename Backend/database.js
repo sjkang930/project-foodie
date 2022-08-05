@@ -11,18 +11,18 @@ const pool = mysql.createPool({
 }).promise()
 
 export async function getPosts() {
-    const [rows] = await pool.query(`SELECT * FROM posts ORDER BY id DESC;`)
+    const [rows] = await pool.query(`SELECT * FROM posts ORDER BY post_id DESC;`)
     return rows
 }
 
-export async function getPost(id) {
+export async function getPost(post_id) {
     const [rows] = await pool.query(`
         SELECT * 
         FROM posts
-        WHERE id =?
-        `, [id]
+        WHERE post_id =?
+        `, [post_id]
     )
-    return rows[0]
+    return rows
 }
 
 export async function createPost(description, filename) {
@@ -30,14 +30,33 @@ export async function createPost(description, filename) {
     INSERT INTO posts (description, filename)
     VALUES(?,?)
     `, [description, filename])
-    const id = result.insertId
-    return getPost(id)
+    const post_id = result.insertId
+    return getPost(post_id)
 }
 
-export async function createComment(comment, id) {
-    let query = "UPDATE posts SET comment = :comment WHERE id = :id";
-    let params = { comment: comment, id: id }
-    const [result] = await database.query(query, params)
+export async function createComment(comment, post_id) {
+    const [result] = await pool.query(`
+    INSERT INTO comments (comment, post_id) VALUES(?, ?)
+    `, [comment, post_id])
     return result
+}
+
+export async function getAllComments() {
+    const [rows] = await pool.query(`
+        SELECT * 
+        FROM comments
+        `,
+    )
+    return rows
+}
+
+export async function getComments(post_id) {
+    const [rows] = await pool.query(`
+        SELECT * 
+        FROM comments
+        WHERE post_id =?
+        `, [post_id]
+    )
+    return rows
 }
 

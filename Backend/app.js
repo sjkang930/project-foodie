@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPosts, getPost, createComment, createPost } from './database.js'
+import { getPosts, getPost, createComment, createPost, getComments, getAllComments } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
@@ -17,20 +17,18 @@ const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
     const posts = await getPosts()
-    console.log(posts)
     res.send(posts)
 })
 
-app.get('/posts/:id', async (req, res) => {
-    const id = req.params.id
-    const post = await getPost(id)
-    res.send(post)
+app.get('/comments', async (req, res) => {
+    const comments = await getAllComments()
+    console.log("comments", comments)
+    res.send(comments)
 })
 
 app.post('/posts', async (req, res) => {
-    const { comment, id} = req.body
-    console.log(comment, id)
-    const post = await createComment(comment, id)
+    const { comment, postId } = req.body
+    const post = await createComment(comment, postId)
     res.send(post)
 })
 

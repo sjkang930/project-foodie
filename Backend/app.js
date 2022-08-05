@@ -2,7 +2,7 @@ import express from 'express'
 import { getPosts, getPost, createComment, createPost, getComments, getAllComments } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
-import fs from 'fs'
+import fs, { copyFileSync } from 'fs'
 import path from 'path'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';

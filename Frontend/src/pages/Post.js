@@ -14,6 +14,7 @@ const Post = () => {
         (async () => {
             const result = await axios.get('/posts')
             setPosts(result.data)
+
         })()
     }, [])
 

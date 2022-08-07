@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
+import Comment from "../components/Comment";
 
 const Post = () => {
-    const [comment, setComment] = useState("");
-    const [comments, setComments] = useState([]);
-    const [dbComments, setDbComments] = useState([]);
-    const [count, setCount] = useState(0);
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([]);
-    const [postId, setPostId] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -18,20 +14,6 @@ const Post = () => {
         })()
     }, [])
 
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get('/comments')
-            setDbComments(result.data)
-        })()
-    }, [comments])
-
-    const submit = async (event) => {
-        event.preventDefault()
-        setComments([...comments, comment])
-        setComment("")
-        setCount(count + 1)
-        const result = await axios.post('/posts', { comment, postId })
-    }
     return (
         <div className="posts">
             {posts.map(post => (
@@ -39,7 +21,7 @@ const Post = () => {
                     <section className="post_head">
                         <div className="left_col">
                             <div className="profile">
-                                <img src="/icons/smantha.svg" />
+                                <img alt="profile" src="/icons/smantha.svg" />
                             </div>
                             <div>
                                 <div className="user_name">
@@ -52,14 +34,14 @@ const Post = () => {
                         </div>
                         <div className="right_col">
                             <div className="more_info">
-                                <img src="/icons/png.png" />
+                                <img alt="moreInfoIcon" src="/icons/png.png" />
                             </div>
                         </div>
                     </section>
 
                     <section className="picture">
                         <div >
-                            <img className="user_pic" src={post.filename} />
+                            <img alt="userPic" className="user_pic" src={post.filename} />
                         </div>
                     </section>
 
@@ -67,18 +49,18 @@ const Post = () => {
                         <div className="second_icon">
                             <div className="left_icons">
                                 <div className="likes">
-                                    <img onClick={() => setIsLike(!isLike)} src={isLike ? "/icons/like.svg" : "/icons/heart.svg"} />
+                                    <img alt="likes" onClick={() => setIsLike(!isLike)} src={isLike ? "/icons/like.svg" : "/icons/heart.svg"} />
                                 </div>
                                 <div className="message">
-                                    <img src="/icons/message.svg" />
+                                    <img alt="message" src="/icons/message.svg" />
                                 </div>
                                 <div className="share">
-                                    <img src="/icons/share.svg" />
+                                    <img alt="share" src="/icons/share.svg" />
                                 </div>
                             </div>
 
                             <div className="right_icon">
-                                <img src="/icons/map.svg" width="39" />
+                                <img alt="map" src="/icons/map.svg" width="39" />
                             </div>
                         </div>
                     </section>
@@ -91,44 +73,11 @@ const Post = () => {
                             {post.description}
                         </div>
                     </section>
-
-                    <section className="comments">
-
-                        <div className="total_comments">
-                            see all {count + posts.length} comments
-                        </div>
-                        <form className="comment_form" onSubmit={submit}>
-                            <input
-                                className="input_comments"
-                                placeholder="Add a Comment..."
-                                value={comment}
-                                onChange={(e) => {
-                                    setComment(e.target.value);
-                                }}
-                                type="text" />
-                            <button className="comment_post" onClick={() => setPostId(post.post_id)}>Post</button>
-                        </form>
-
-                        <div>
-                            <ul>
-                               
-                                 
-                            {dbComments.map(it =>    <li key={it.comment_id} className="comment_list">{it.post_id === post.post_id ? it.comment : " "}</li>)}
-                                        {comments.map((comment, index) => <li key={index} className="comment_list">{comment}</li>
-                                        )}
-                                
-                                
-                            </ul>
-                        </div>
-                    </section>
-                </div >
+                    <Comment post_id={post.post_id} />
+                </div>
             ))}
         </div>
     );
-
-
-
 }
-
 
 export default Post;

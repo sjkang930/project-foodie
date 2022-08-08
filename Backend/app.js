@@ -6,6 +6,7 @@ import fs, { copyFileSync } from 'fs'
 import path from 'path'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import axios from 'axios'
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,12 +18,13 @@ const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
     const posts = await getPosts()
-    res.send(posts)
+    const data = await axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=49.2835&lon=-123.1153&units=metric&exclude=alerts,minutely,hourly&appid=4cbef8d14595f0b934423873f451a110")
+    console.log(data)
+    res.send(posts, data)
 })
 
 app.get('/comments', async (req, res) => {
     const comments = await getAllComments()
-    console.log("comments", comments)
     res.send(comments)
 })
 
@@ -39,7 +41,7 @@ app.get('/images/:filename', (req, res) => {
 })
 
 
-app.get('create', async (req, res) => {
+app.get('/create', async (req, res) => {
 
 })
 
@@ -55,6 +57,22 @@ app.post('/create', upload.single('image'), async (req, res) => {
         description,
         image_url
     })
+})
+
+app.post('/restaurant', async (req, res) => {
+    const { restaurantName } = req.body
+    console.log(restaurantName)
+    let url_api = `https://api.yelp.com/v3/autocomplete?text=${restaurantName}&latitude=49.2827&longitude=-123.1207`
+    let headers = {
+        "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
+    }
+    const request = {
+        headers
+    }
+    const data = await axios.get(url_api, request)
+    const restaurants = data.data.businesses
+    const restaurant_name = restaurants.map(restaurant => restaurant.name)
+    res.send(restaurant_name)
 })
 
 app.use(function (err, req, res, next) {

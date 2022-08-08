@@ -7,7 +7,7 @@ const NavBar = () => {
 
                 </a>
                 <a class="nav-btn" href={"/Map"}>
-                    <img class="nav-icon" src="icons/locationicon.svg" />
+                    <img alt="map" class="nav-icon" src="icons/locationicon.svg" />
                 </a>
                 <a class="nav-btn" href={"/Create"}>
 

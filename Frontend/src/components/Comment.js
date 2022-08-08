@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 
 const Comment = ({ post_id }) => {
-
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
     const [count, setCount] = useState(0);
@@ -15,14 +14,11 @@ const Comment = ({ post_id }) => {
             const result = await axios.get('/comments')
             const commentIdArray = result.data.map(it => it.comment_id)
             setComments(result.data)
-            console.log(commentIdArray)
             setComment_id(commentIdArray.length === 0 ? 1 : commentIdArray[commentIdArray.length - 1] + 1)
         })()
     }, [])
 
-
     const submit = async (event) => {
-        console.log(comment_id)
         event.preventDefault()
         const newData = {
             comment,
@@ -33,7 +29,7 @@ const Comment = ({ post_id }) => {
         setComments([...comments, newData])
         setComment("")
         setCount(count + 1)
-        const result = await axios.post('/posts', { comment, postId })
+        await axios.post('/posts', { comment, postId })
     }
 
     return (
@@ -51,7 +47,26 @@ const Comment = ({ post_id }) => {
                             setComment(e.target.value);
                         }}
                         type="text" />
-                    <button className="comment_post" onClick={() => setPostId(post_id)}>Post</button>
+                    <button className="comment_post" onClick={async () => {
+                        setPostId(post_id)
+                        // const data = await axios.get("https://api.yelp.com/v3/businesses/search")
+                        // console.log(data)
+                        // .then((result)=> {
+                        //     console.log(result)
+                        // })
+                        // .catch((erro)=>{
+                        //     console.log(err)
+                        // })
+                        // let latitude = req.query.latitude
+                        // let longitude = req.query.longitude
+                        // let url = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&radius=40000`
+                        // let options = {
+                        //     'headers': {
+                        //         'x-api-key': 'I4VPC2nHPKjXgSkG2406XTkcgKtB42TNNBa_WF38qTdb9lERIdrZeqkkYsdwNgfooicoEbw_BMg6EtISWqQ2ogJdjQmp4sITejk6FRz8vYSQd79hep_YC9Fj68SJYnYx',
+                        //         'Authorization': 'Bearer I4VPC2nHPKjXgSkG2406XTkcgKtB42TNNBa_WF38qTdb9lERIdrZeqkkYsdwNgfooicoEbw_BMg6EtISWqQ2ogJdjQmp4sITejk6FRz8vYSQd79hep_YC9Fj68SJYnYx'
+                        //     }
+                        // };
+                    }}>Post</button>
                 </form>
                 <div>
                     <ul>

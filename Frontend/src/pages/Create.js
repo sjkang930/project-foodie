@@ -1,12 +1,13 @@
 import axios from "axios";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import SearchRestaurant from '../components/SearchRestaurant'
 const Create = () => {
     const descriptionInput = useRef();
     const fileRef = useRef(null);
     const [file, setFile] = useState();
     const [description, setDescription] = useState("");
+    const [restaurantName, setResturantName] = useState("");
     const navigate = useNavigate();
 
     const submit = async event => {
@@ -15,7 +16,7 @@ const Create = () => {
             descriptionInput.current.focus();
             return;
         }
-        if(!file){
+        if (!file) {
             fileRef.current.focus();
             return;
         }
@@ -41,15 +42,15 @@ const Create = () => {
                     type="file"
                     accept="image/*">
                 </input>
-
                 <input
                     ref={descriptionInput}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     type="text"
-                    placeholder="description"></input>
-                <button type="submit">Submit</button>
+                    placeholder="Write a Caption..."></input>
+                <button type="submit">Post</button>
             </form>
+            <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
         </div>
     )
 }

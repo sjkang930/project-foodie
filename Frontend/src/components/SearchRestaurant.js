@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const SearchRestaurant = ({ restaurantName, setResturantName }) => {
     const [inputData, setInputData] = useState("")
     const [text, setText] = useState('');
-    const [isActive, setIsActive] = useState(false);
+    const listInput = useRef()
     const onClick = async () => {
     }
     const onChange = async (e) => {
@@ -23,10 +23,12 @@ const SearchRestaurant = ({ restaurantName, setResturantName }) => {
             ></input>
             <>
                 {text.length > 0 ? text.map(restaurant => {
-                    return <li className={isActive ? "restaurantList displayNone" : "restaurantList"} key={restaurant.id}
-                        onClick={() => { setInputData(restaurant.name) }}>
-                        {restaurant.name.toLowerCase().includes(inputData) ? restaurant.name : ""}
-                    </li>
+                    if (restaurant.name.toLowerCase().includes(inputData)) {
+                        return <li ref={listInput} className="restaurantList" key={restaurant.id}
+                            onClick={() => { setInputData(restaurant.name) }}>
+                            {restaurant.name}
+                        </li>
+                    }
                 }) : ""}
             </>
             <button onClick={onClick} type="submit">+</button>

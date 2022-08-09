@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchRestaurant from '../components/SearchRestaurant'
+import Head from '../components/Head'
+// import './create.css'; 
+
 const Create = () => {
     const descriptionInput = useRef();
     const fileRef = useRef(null);
@@ -20,7 +23,6 @@ const Create = () => {
             fileRef.current.focus();
             return;
         }
-
         const data = new FormData()
         data.append('image', file)
         data.append('description', description)
@@ -31,26 +33,35 @@ const Create = () => {
     }
 
     return (
-        <div className="Create">
-            <form onSubmit={submit}>
-                <input
-                    ref={fileRef}
-                    filename={file}
-                    onChange={(e) => {
-                        setFile(e.target.files[0])
-                    }}
-                    type="file"
-                    accept="image/*">
-                </input>
-                <input
-                    ref={descriptionInput}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    type="text"
-                    placeholder="Write a Caption..."></input>
-                <button type="submit">Post</button>
-            </form>
-            <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
+        <div>
+            <Head />
+            <div className="card">
+                <form onSubmit={submit}>
+                    <>
+                        <input className="file"
+                            ref={fileRef}
+                            filename={file}
+                            onChange={(e) => {
+                                setFile(e.target.files[0])
+                            }}
+                            type="file"
+                            accept="image/*">
+                        </input>
+                    </>
+                    <>
+                        <input className="description"
+                            ref={descriptionInput}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            type="text"
+                            placeholder="Write a Caption..."></input>
+                    </>
+                    <button type="submit">Post</button>
+                </form>
+                <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
+            </div>
+
+
         </div>
     )
 }

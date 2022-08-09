@@ -49,29 +49,11 @@ const Comment = ({ post_id }) => {
                         type="text" />
                     <button className="comment_post" onClick={async () => {
                         setPostId(post_id)
-                        // const data = await axios.get("https://api.yelp.com/v3/businesses/search")
-                        // console.log(data)
-                        // .then((result)=> {
-                        //     console.log(result)
-                        // })
-                        // .catch((erro)=>{
-                        //     console.log(err)
-                        // })
-                        // let latitude = req.query.latitude
-                        // let longitude = req.query.longitude
-                        // let url = `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&radius=40000`
-                        // let options = {
-                        //     'headers': {
-                        //         'x-api-key': 'I4VPC2nHPKjXgSkG2406XTkcgKtB42TNNBa_WF38qTdb9lERIdrZeqkkYsdwNgfooicoEbw_BMg6EtISWqQ2ogJdjQmp4sITejk6FRz8vYSQd79hep_YC9Fj68SJYnYx',
-                        //         'Authorization': 'Bearer I4VPC2nHPKjXgSkG2406XTkcgKtB42TNNBa_WF38qTdb9lERIdrZeqkkYsdwNgfooicoEbw_BMg6EtISWqQ2ogJdjQmp4sITejk6FRz8vYSQd79hep_YC9Fj68SJYnYx'
-                        //     }
-                        // };
                     }}>Post</button>
                 </form>
                 <div>
                     <ul>
                         {comments.map(it => <li key={it.comment_id} className="comment_list">{it.post_id === post_id ? it.comment : " "}</li>)}
-
                     </ul>
                 </div>
             </section>

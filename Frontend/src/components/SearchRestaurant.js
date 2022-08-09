@@ -1,22 +1,37 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 const SearchRestaurant = ({ restaurantName, setResturantName }) => {
+    const [inputData, setInputData] = useState("")
+    const [text, setText] = useState('');
+    const [isActive, setIsActive] = useState(false);
     const onClick = async () => {
-        const result = await axios.post("/restaurant", { restaurantName })
-        console.log(result)
+    }
+    const onChange = async (e) => {
+        setInputData(e.target.value)
+        const result = await axios.post("/restaurant", { inputData })
+        setText(result.data)
     }
     return (
-        <div>
-
+        <>
             <input
+                className="restaurant"
                 placeholder="Add a Restaurant"
-                onChange={(e) => setResturantName(e.target.value)}
-            ></input>
+                onChange={onChange}
+                value={inputData}
 
+            ></input>
+            <>
+                {text.length > 0 ? text.map(restaurant => {
+                    return <li className={isActive ? "restaurantList displayNone" : "restaurantList"} key={restaurant.id}
+                        onClick={() => { setInputData(restaurant.name) }}>
+                        {restaurant.name.toLowerCase().includes(inputData) ? restaurant.name : ""}
+                    </li>
+                }) : ""}
+            </>
             <button onClick={onClick} type="submit">+</button>
 
-
-        </div>
+        </>
     )
 }
 export default SearchRestaurant;

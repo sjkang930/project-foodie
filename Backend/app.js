@@ -16,12 +16,12 @@ app.use(express.json());
 
 const upload = multer({ dest: 'uploads/' })
 
-app.get('/posts', async (req, res) => {
-    const posts = await getPosts()
-    const data = await axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=49.2835&lon=-123.1153&units=metric&exclude=alerts,minutely,hourly&appid=4cbef8d14595f0b934423873f451a110")
-    console.log(data)
-    res.send(posts, data)
-})
+// app.get('/posts', async (req, res) => {
+//     const posts = await getPosts()
+//     const data = await axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=49.2835&lon=-123.1153&units=metric&exclude=alerts,minutely,hourly&appid=4cbef8d14595f0b934423873f451a110")
+//     console.log(data)
+//     res.send(posts, data)
+// })
 
 app.get('/comments', async (req, res) => {
     const comments = await getAllComments()
@@ -60,9 +60,9 @@ app.post('/create', upload.single('image'), async (req, res) => {
 })
 
 app.post('/restaurant', async (req, res) => {
-    const { restaurantName } = req.body
-    console.log(restaurantName)
-    let url_api = `https://api.yelp.com/v3/autocomplete?text=${restaurantName}&latitude=49.2827&longitude=-123.1207`
+    const { inputData } = req.body
+    console.log(inputData)
+    let url_api = `https://api.yelp.com/v3/businesses/search?term=${inputData}&latitude=49.2827&longitude=-123.1207&radius=40000`
     let headers = {
         "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
     }
@@ -71,8 +71,7 @@ app.post('/restaurant', async (req, res) => {
     }
     const data = await axios.get(url_api, request)
     const restaurants = data.data.businesses
-    const restaurant_name = restaurants.map(restaurant => restaurant.name)
-    res.send(restaurant_name)
+    res.send(restaurants)
 })
 
 app.use(function (err, req, res, next) {

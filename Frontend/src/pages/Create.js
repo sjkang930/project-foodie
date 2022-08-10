@@ -26,6 +26,7 @@ const Create = () => {
         const data = new FormData()
         data.append('image', file)
         data.append('description', description)
+        data.append('resName', restaurantName)
         const result = await axios.post('/create', data)
         alert("successfully posted")
         navigate('/', { replace: true });
@@ -56,9 +57,9 @@ const Create = () => {
                             type="text"
                             placeholder="Write a Caption..."></input>
                     </>
+                    <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
                     <button type="submit">Post</button>
                 </form>
-                <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
             </div>
 
 

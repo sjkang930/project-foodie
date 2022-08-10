@@ -16,12 +16,10 @@ app.use(express.json());
 
 const upload = multer({ dest: 'uploads/' })
 
-// app.get('/posts', async (req, res) => {
-//     const posts = await getPosts()
-//     const data = await axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=49.2835&lon=-123.1153&units=metric&exclude=alerts,minutely,hourly&appid=4cbef8d14595f0b934423873f451a110")
-//     console.log(data)
-//     res.send(posts, data)
-// })
+app.get('/posts', async (req, res) => {
+    const posts = await getPosts()
+    res.send(posts)
+})
 
 app.get('/comments', async (req, res) => {
     const comments = await getAllComments()
@@ -47,22 +45,22 @@ app.get('/create', async (req, res) => {
 
 app.post('/create', upload.single('image'), async (req, res) => {
     const { filename, path } = req.file
-    const description = req.body.description
+    const { description, resName } = req.body
     const image_url = `/images/${filename}`
-    const post = await createPost(description, image_url)
+    const post = await createPost(description, image_url, resName)
     console.log("req.body", req.body)
     console.log("req.file", req.file)
     console.log(post)
     res.send({
         description,
-        image_url
+        image_url,
+        resName
     })
 })
 
 app.post('/restaurant', async (req, res) => {
-    const { inputData } = req.body
-    console.log(inputData)
-    let url_api = `https://api.yelp.com/v3/businesses/search?term=${inputData}&latitude=49.2827&longitude=-123.1207&radius=40000`
+    const { restaurantName } = req.body
+    let url_api = `https://api.yelp.com/v3/businesses/search?term=${restaurantName}&latitude=49.2827&longitude=-123.1207&radius=40000`
     let headers = {
         "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
     }

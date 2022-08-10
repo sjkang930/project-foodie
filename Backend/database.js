@@ -25,11 +25,11 @@ export async function getPost(post_id) {
     return rows
 }
 
-export async function createPost(description, filename) {
+export async function createPost(description, filename, resName) {
     const [result] = await pool.query(`
-    INSERT INTO posts (description, filename)
-    VALUES(?,?)
-    `, [description, filename])
+    INSERT INTO posts (description, filename, resName)
+    VALUES(?,?,?)
+    `, [description, filename, resName])
     const post_id = result.insertId
     return getPost(post_id)
 }

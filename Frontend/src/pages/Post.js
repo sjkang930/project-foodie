@@ -28,7 +28,7 @@ const Post = () => {
                                     suji kang
                                 </div>
                                 <div className="location">
-                                    @mumu kitchen
+                                    {post.resName}
                                 </div>
                             </div>
                         </div>

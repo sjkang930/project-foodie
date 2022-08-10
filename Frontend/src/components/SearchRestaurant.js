@@ -1,15 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const SearchRestaurant = ({ restaurantName, setResturantName }) => {
-    const [inputData, setInputData] = useState("")
     const [text, setText] = useState('');
-    const listInput = useRef()
     const onClick = async () => {
+
     }
     const onChange = async (e) => {
-        setInputData(e.target.value)
-        const result = await axios.post("/restaurant", { inputData })
+        setResturantName(e.target.value)
+        const result = await axios.post("/restaurant", { restaurantName })
         setText(result.data)
     }
     return (
@@ -18,21 +17,19 @@ const SearchRestaurant = ({ restaurantName, setResturantName }) => {
                 className="restaurant"
                 placeholder="Add a Restaurant"
                 onChange={onChange}
-                value={inputData}
+                value={restaurantName}
 
             ></input>
             <>
                 {text.length > 0 ? text.map(restaurant => {
-                    if (restaurant.name.toLowerCase().includes(inputData)) {
-                        return <li ref={listInput} className="restaurantList" key={restaurant.id}
-                            onClick={() => { setInputData(restaurant.name) }}>
+                    if (restaurant.name.toLowerCase().includes(restaurantName)) {
+                        return <li className="restaurantList" key={restaurant.id}
+                            onClick={() => { setResturantName(restaurant.name) }}>
                             {restaurant.name}
                         </li>
                     }
                 }) : ""}
             </>
-            <button onClick={onClick} type="submit">+</button>
-
         </>
     )
 }

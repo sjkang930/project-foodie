@@ -213,3 +213,46 @@ ul {
 .displayNone {
   display: none;
 }
+
+
+
+/* more buttons */
+/* .more_buttons{
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  width: 100px;
+  height: 100px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.more_buttons button {
+  cursor: pointer;
+  background-color: white;
+  color:#1a5e63;
+  min-height: 20px;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  border-bottom: 0;
+  border-top: 1px solid lightgray;
+}
+.more_buttons button:hover {
+  background-color: grey;
+}
+
+.more_buttons .delete_btn {
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-top: 1px solid1px solid lightgray;
+  color: #ED4956;
+}
+
+.more_buttons .edit_btn {
+  border-bottom: 1px solid lightgray;
+}
+.more_buttons .cancel_btn {
+  border-top: 0;
+  border-bottom: 1px solid lightgray;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+} */

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import Comment from "../components/Comment";
+import MoreButtons from "../components/MoreButtons";
+
 
 const Post = () => {
     const [isLike, setIsLike] = useState(false);
@@ -32,11 +34,7 @@ const Post = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="right_col">
-                            <div className="more_info">
-                                <img alt="moreInfoIcon" src="/icons/png.png" />
-                            </div>
-                        </div>
+                        <MoreButtons/>
                     </section>
 
                     <section className="picture">

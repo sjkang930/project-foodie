@@ -66,9 +66,12 @@ a img.head_logo {
   color: #00bfb2;
 }
 
-.right_col .more_info {
-  padding-top: 10px;
+.right_col {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
+
 
 .post_head {
   display: flex;
@@ -215,9 +218,9 @@ ul {
 }
 
 
+/* more buttons  */
 
-/* more buttons */
-/* .more_buttons{
+.more_buttons{
   display: flex;
   flex-direction: column;
   align-items: right;
@@ -255,4 +258,7 @@ ul {
   border-bottom: 1px solid lightgray;
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
-} */
+} 
+.img_div{
+  padding-top: 5px;
+}

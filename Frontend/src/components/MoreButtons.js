@@ -1,15 +1,20 @@
 // import React from 'react';
 import React, { useState } from "react";
 
-const MoreButtons = () => {
+const MoreButtons = ({ post_id, deleteBtn }) => {
     const [moreButtons, setMoreButtons] = useState(false);
-    console.log(moreButtons)
+    const cancelBtn = () => {
+        setMoreButtons(!moreButtons)
+    }
     return (
         <>
             <div className="right_col">
+
                 <div className="more_buttons">
-                    <img alt="moreInfoIcon" onClick={() => setMoreButtons(!moreButtons)}  src="/icons/png.png" />
-                    {moreButtons ? <><button>edit</button><button>delete</button><button>cancel</button></>:""}
+                    {moreButtons ? <><button className="delete_btn">Delete</button><button className="edit_btn">Edit</button><button onClick={cancelBtn} className="cancel_btn">Cancel</button></> : ""}
+                </div>
+                <div className="img_div">
+                    <img alt="moreInfoIcon" onClick={() => setMoreButtons(!moreButtons)} src="/icons/png.png" />
                 </div>
             </div>
         </>
@@ -18,3 +23,4 @@ const MoreButtons = () => {
 }
 
 export default MoreButtons;
+

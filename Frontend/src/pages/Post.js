@@ -15,6 +15,9 @@ const Post = () => {
 
         })()
     }, [])
+    const deleteBtn = () => {
+
+    }
 
     return (
         <div className="posts">
@@ -34,7 +37,7 @@ const Post = () => {
                                 </div>
                             </div>
                         </div>
-                        <MoreButtons/>
+                        <MoreButtons post_id={post.post_id} deleteBtn={deleteBtn} />
                     </section>
 
                     <section className="picture">

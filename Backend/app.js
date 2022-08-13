@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPosts, getPost, createComment, createPost, getComments, getAllComments } from './database.js'
+import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
@@ -57,6 +57,33 @@ app.post('/create', upload.single('image'), async (req, res) => {
         resName
     })
 })
+app.delete('/delete/:post_id', async (req, res) => {
+    const post_id = req.params.post_id
+    const post = await getPost(post_id)
+    if (!post) {
+        res.status(400).send({ message: `there is no post with post_id ${post_id}` });
+        return;
+    }
+    await deletePost(post_id);
+})
+
+app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
+    const post_id = req.params.post_id
+    console.log(post_id)
+    console.log("req.body", req.body)
+    console.log("req.file", req.file)
+    const { filename, path } = req.file
+    const { description, resName } = req.body
+    const image_url = `/images/${filename}`
+    const post = await updatePost(description, `/images/${filename}`, resName, post_id)
+    console.log(post)
+    res.send({
+        description,
+        image_url,
+        resName
+    })
+})
+
 
 app.post('/restaurant', async (req, res) => {
     const { restaurantName } = req.body
@@ -71,6 +98,7 @@ app.post('/restaurant', async (req, res) => {
     const restaurants = data.data.businesses
     res.send(restaurants)
 })
+
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);

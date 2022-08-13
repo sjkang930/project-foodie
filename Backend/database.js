@@ -34,6 +34,19 @@ export async function createPost(description, filename, resName) {
     return getPost(post_id)
 }
 
+export async function updatePost(description, filename, resName, post_id) {
+    const query = `UPDATE posts SET description = ?, filename = ?, resName = ? WHERE post_id = ?`;
+    const [result] = await pool.query(query, [description, filename, resName, post_id]);
+    const post = getPost(post_id)
+    return post;
+}
+
+export async function deletePost(post_id) {
+    const query = `DELETE FROM posts WHERE post_id = ?`;
+    const [result] = await pool.query(query, [post_id]);
+    return result;
+}
+
 export async function createComment(comment, post_id) {
     const [result] = await pool.query(`
     INSERT INTO comments (comment, post_id) VALUES(?, ?)
@@ -59,4 +72,6 @@ export async function getComments(post_id) {
     )
     return rows
 }
+
+
 

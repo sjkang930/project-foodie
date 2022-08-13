@@ -1,19 +1,23 @@
 import axios from "axios";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchRestaurant from '../components/SearchRestaurant'
 import Head from '../components/Head'
-// import './create.css'; 
-
-const Create = () => {
+const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
     const descriptionInput = useRef();
     const fileRef = useRef(null);
     const [file, setFile] = useState();
     const [description, setDescription] = useState("");
     const [restaurantName, setResturantName] = useState("");
     const navigate = useNavigate();
+    const { post_id } = newPost
 
-    const submit = async event => {
+    useEffect(() => {
+        setDescription(newPost.description)
+        setResturantName(newPost.resName)
+    }, [])
+
+    const submit = async (event) => {
         event.preventDefault()
         if (description.length < 1) {
             descriptionInput.current.focus();
@@ -27,14 +31,16 @@ const Create = () => {
         data.append('image', file)
         data.append('description', description)
         data.append('resName', restaurantName)
-        await axios.post('/create', data)
-        alert("successfully posted")
+        const result = await axios.put(`/edit/${post_id}`, data)
+        const { image_url } = result.data
+        setPosts(posts.map(it => it.post_id !== newPost.post_id ? it : { filename: image_url, description, resName: restaurantName }))
+        alert("successfully edited")
+        setIsEdit(!isEdit)
         navigate('/', { replace: true });
     }
-
     return (
         <div>
-            <Head name="Preivew" />
+            <Head name="Edit" />
             <div className="card">
                 <form onSubmit={submit}>
                     <>
@@ -54,15 +60,13 @@ const Create = () => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             type="text"
-                            placeholder="Write a Caption..."></input>
+                        ></input>
                     </>
                     <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
                     <button type="submit">Post</button>
                 </form>
             </div>
-
-
         </div>
     )
 }
-export default Create;
+export default Edit;

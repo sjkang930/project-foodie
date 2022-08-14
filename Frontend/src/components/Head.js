@@ -3,7 +3,7 @@ import React from 'react';
 const Head = ({ name }) => {
     return (
         <>
-            <a href="/"><img className="head_logo" src='icons/back button.svg' alt="logo" /></a>
+            <a href="/"><img className="back_logo" src='/icons/backbutton.svg' alt="logo" /></a>
             <h2>{name} Post</h2>
         </>
 

@@ -11,6 +11,7 @@ const Create = () => {
     const [file, setFile] = useState();
     const [description, setDescription] = useState("");
     const [restaurantName, setResturantName] = useState("");
+    const [place, setPlace] = useState("49.2827,-123.1207")
     const navigate = useNavigate();
 
     const submit = async event => {
@@ -56,7 +57,7 @@ const Create = () => {
                             type="text"
                             placeholder="Write a Caption..."></input>
                     </>
-                    <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
+                    <SearchRestaurant place={place} setPlace={setPlace} restaurantName={restaurantName} setResturantName={setResturantName} />
                     <button type="submit">Post</button>
                 </form>
             </div>

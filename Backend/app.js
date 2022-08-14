@@ -48,9 +48,6 @@ app.post('/create', upload.single('image'), async (req, res) => {
     const { description, resName } = req.body
     const image_url = `/images/${filename}`
     const post = await createPost(description, image_url, resName)
-    console.log("req.body", req.body)
-    console.log("req.file", req.file)
-    console.log(post)
     res.send({
         description,
         image_url,
@@ -69,14 +66,10 @@ app.delete('/delete/:post_id', async (req, res) => {
 
 app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
     const post_id = req.params.post_id
-    console.log(post_id)
-    console.log("req.body", req.body)
-    console.log("req.file", req.file)
     const { filename, path } = req.file
     const { description, resName } = req.body
     const image_url = `/images/${filename}`
     const post = await updatePost(description, `/images/${filename}`, resName, post_id)
-    console.log(post)
     res.send({
         description,
         image_url,
@@ -86,8 +79,12 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
 
 
 app.post('/restaurant', async (req, res) => {
-    const { restaurantName } = req.body
-    let url_api = `https://api.yelp.com/v3/businesses/search?term=${restaurantName}&latitude=49.2827&longitude=-123.1207&radius=40000`
+    const { restaurantName, place } = req.body
+    const latitude = place.substring(0, place.indexOf(','))
+    const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
+    console.log("latitude", latitude)
+    console.log("longtitude", longitude)
+    let url_api = `https://api.yelp.com/v3/businesses/search?term=${restaurantName}&latitude=${latitude}&longitude=${longitude}&radius=40000`
     let headers = {
         "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
     }

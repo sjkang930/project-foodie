@@ -9,6 +9,7 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
     const [file, setFile] = useState();
     const [description, setDescription] = useState("");
     const [restaurantName, setResturantName] = useState("");
+    const [place, setPlace] = useState("49.2827,-123.1207");
     const navigate = useNavigate();
     const { post_id } = newPost
 
@@ -62,8 +63,8 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
                             type="text"
                         ></input>
                     </>
-                    <SearchRestaurant restaurantName={restaurantName} setResturantName={setResturantName} />
-                    <button type="submit">Post</button>
+                    <SearchRestaurant place={place} setPlace={setPlace} restaurantName={restaurantName} setResturantName={setResturantName} />
+                    <button type="submit">Edit</button>
                 </form>
             </div>
         </div>

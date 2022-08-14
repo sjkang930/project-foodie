@@ -36,12 +36,14 @@ const Post = () => {
                                     <div className="user_name">
                                         suji kang
                                     </div>
-                                    <div className="location">
-                                        {post.resName}
-                                    </div>
+                                </div>
+                                <div className="location">
+                                    {post.resName}
 
                                 </div>
+
                             </div>
+
                             <MoreButtons post_id={post.post_id} deleteBtn={deleteBtn} editBtn={() => {
                                 setIsEdit(!isEdit)
                                 const editPost = posts.find(it => it.post_id === post.post_id)

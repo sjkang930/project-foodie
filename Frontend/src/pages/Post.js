@@ -29,17 +29,18 @@ const Post = () => {
                     <div className="post" key={post.post_id} >
                         <section className="post_head">
                             <div className="left_col">
-                                <div className="profile">
-                                    <img alt="profile" src="/icons/smantha.svg" />
-                                </div>
                                 <div>
+                                    <img className="profile" alt="profile" src="/icons/smantha.svg" />
+                                </div>
+                                <span className="name_location">
                                     <div className="user_name">
                                         suji kang
+
                                     </div>
                                     <div className="location">
                                         {post.resName}
                                     </div>
-                                </div>
+                                </span>
                             </div>
                             <MoreButtons post_id={post.post_id} deleteBtn={deleteBtn} editBtn={() => {
                                 setIsEdit(!isEdit)

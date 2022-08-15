@@ -185,6 +185,7 @@ ul {
 li.comment_list {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 5px;
 }
 .comment_div {
   width: 85%;

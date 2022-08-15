@@ -54,6 +54,22 @@ export async function createComment(comment, post_id) {
     return result
 }
 
+export async function getComment(comment_id) {
+    const [rows] = await pool.query(`
+        SELECT * 
+        FROM comments
+        WHERE comment_id =?
+        `, [comment_id]
+    )
+    return rows
+}
+
+export async function deleteComment(comment_id) {
+    const query = `DELETE FROM comments WHERE comment_id = ?`;
+    const [result] = await pool.query(query, [comment_id]);
+    return result;
+}
+
 export async function getAllComments() {
     const [rows] = await pool.query(`
         SELECT * 

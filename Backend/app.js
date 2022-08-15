@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost } from './database.js'
+import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
@@ -26,6 +26,16 @@ app.get('/comments', async (req, res) => {
     res.send(comments)
 })
 
+app.delete('/comments/:id', async (req, res) => {
+    const comment_id = req.params.id
+    const comment = await getComments(comment_id)
+    if (!comment) {
+        res.status(400).send({ message: `there is no post with post_id ${comment_id}` });
+        return;
+    }
+    await deleteComment(comment_id);
+})
+
 app.post('/posts', async (req, res) => {
     const { comment, postId } = req.body
     const post = await createComment(comment, postId)
@@ -38,7 +48,6 @@ app.get('/images/:filename', (req, res) => {
     readStream.pipe(res)
 })
 
-
 app.post('/create', upload.single('image'), async (req, res) => {
     const { filename, path } = req.file
     const { description, resName } = req.body
@@ -50,6 +59,7 @@ app.post('/create', upload.single('image'), async (req, res) => {
         resName
     })
 })
+
 app.delete('/delete/:post_id', async (req, res) => {
     const post_id = req.params.post_id
     const post = await getPost(post_id)
@@ -73,7 +83,6 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
     })
 })
 
-
 app.post('/restaurant', async (req, res) => {
     const { restaurantName, place } = req.body
     const latitude = place.substring(0, place.indexOf(','))
@@ -91,7 +100,6 @@ app.post('/restaurant', async (req, res) => {
     const restaurants = data.data.businesses
     res.send(restaurants)
 })
-
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);

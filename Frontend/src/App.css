@@ -20,9 +20,9 @@ body {
 
 .post .user_pic {
   float: none;
-  width: 100%;
+  width: 100vh;
   margin-left: auto;
-  max-width: 400px;
+  max-width: 500px;
   max-height: 400px;
 }
 
@@ -49,14 +49,11 @@ a img.head_logo {
 }
 
 .Head a img {
-  
 }
 .Head h2 {
- margin-top: 2px;
- margin-left: 10px;
+  margin-top: 2px;
+  margin-left: 10px;
 }
-
-
 
 .App h2 .head_logo {
   display: flex;
@@ -75,12 +72,12 @@ a img.head_logo {
   padding-right: 10px;
 }
 .left_col .user_name {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .left_col .location {
   color: #00bfb2;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .right_col {
@@ -93,8 +90,7 @@ a img.head_logo {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: -40px;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -186,14 +182,20 @@ ul {
   display: flex;
 }
 
-/* li.comment_list {
-  background-color: green;
-  justify-content: flex-end;
-} */
+li.comment_list {
+  display: flex;
+  justify-content: space-between;
+}
+.comment_div {
+  width: 85%;
+}
+.comment_btn_div {
+  width: 15%;
+}
 .comment_list .comment_edit_btn {
   /* background-color: red; */
   cursor: pointer;
-  margin-left: 120px;
+  margin-left: 50px;
   border: none;
   background-color: white;
 }
@@ -232,7 +234,7 @@ ul {
   outline: none;
   background-color: pink;
 }
-.restaurant_ul{
+.restaurant_ul {
   padding-left: 0px;
 }
 
@@ -255,6 +257,7 @@ ul {
   height: 100px;
   padding-right: 5px;
   padding-left: 5px;
+  padding-bottom: 5px;
 }
 .more_buttons button {
   cursor: pointer;
@@ -290,7 +293,7 @@ ul {
   padding-top: 5px;
 }
 
-.preview_div{
+.preview_div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -305,7 +308,6 @@ ul {
   height: 90%;
   padding-top: 10px;
 }
-
 
 @media (max-width: 400px) {
   .post {

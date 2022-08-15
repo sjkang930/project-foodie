@@ -13,7 +13,7 @@ const CommentList = ({ comments, post_id }) => {
         setEditComment(!editComment)
         console.log(editComment)
     }
-    
+
     return (
         <div className="commentList">
             <ul className="comment_wrap">
@@ -21,11 +21,8 @@ const CommentList = ({ comments, post_id }) => {
                     if (it.post_id === post_id) {
                         return (
                             <li key={it.comment_id} className="comment_list">
-                                {it.comment}
-                                <button onClick={() => commentClick(it.comment_id)}
-                                    className="comment_edit_btn">
-                                    <img alt="editComment" src="/icons/png.png" />
-                                </button>
+                                <div className="comment_div">{it.comment}</div>
+                                <div className="comment_btn_div">
                                 <>
                                     {
                                         (it.comment_id == thisComment_id && editComment) ?
@@ -40,6 +37,12 @@ const CommentList = ({ comments, post_id }) => {
                                             </> : ""
                                     }
                                 </ >
+                                <button onClick={() => commentClick(it.comment_id)}
+                                    className="comment_edit_btn">
+                                    <img alt="editComment" src="/icons/png.png" />
+                                </button>
+                              
+                                </div>
                             </li>)
                     }
                 }

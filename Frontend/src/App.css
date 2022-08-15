@@ -191,13 +191,13 @@ li.comment_list {
 }
 .comment_btn_div {
   width: 15%;
+  display: flex;
+  justify-content: end;
+  padding-right: 10px;
 }
 .comment_list .comment_edit_btn {
-  /* background-color: red; */
   cursor: pointer;
-  margin-left: 50px;
-  border: none;
-  background-color: white;
+  padding-left: 10px;
 }
 
 .file {

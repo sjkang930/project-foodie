@@ -52,7 +52,7 @@ const Comment = ({ post_id }) => {
                     }}>Post</button>
                 </form>
                 <div>
-                    <CommentList comments={comments} post_id={post_id} />
+                    <CommentList comments={comments} setComments={setComments}post_id={post_id} />
                 </div>
             </section>
         </div>

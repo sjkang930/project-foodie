@@ -18,8 +18,10 @@ const Post = () => {
     }, [])
 
     const deleteBtn = async (post_id) => {
+        if (window.confirm("Are you sure you want to delete it?")) {
         setPosts(posts.filter(post => post.post_id !== post_id))
         await axios.delete(`/delete/${post_id}`)
+        }
     }
 
     return (

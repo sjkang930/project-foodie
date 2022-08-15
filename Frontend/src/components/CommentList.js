@@ -6,14 +6,12 @@ const CommentList = ({ comments, post_id }) => {
     const cancelBtn = () => {
         setEditComment(!editComment)
     }
-
     const commentClick = (targetId) => {
         console.log(targetId)
         setThisComment_id(targetId)
         setEditComment(!editComment)
         console.log(editComment)
     }
-
     return (
         <div className="commentList">
             <ul className="comment_wrap">
@@ -37,11 +35,8 @@ const CommentList = ({ comments, post_id }) => {
                                                 </> : ""
                                         }
                                     </ >
-
                                     <img onClick={() => commentClick(it.comment_id)}
                                         className="comment_edit_btn" alt="editComment" src="/icons/png.png" />
-
-
                                 </div>
                             </li>)
                     }

@@ -11,7 +11,7 @@ const CommentList = ({ comments, setComments, post_id }) => {
     const commentClick = (targetId) => {
         setThisComment_id(targetId)
         setEditComment(!editComment)
-        console.log(editComment)
+        // console.log(editComment)
     }
     const deleteBtn = async (id) => {
         if (window.confirm("Are you sure you want to delete it?")) {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
 import Profile from './pages/Profile';
@@ -8,6 +8,13 @@ import Create from './pages/Create';
 import Post from './pages/Post';
 
 function App() {
+  const [isEdit, setIsEdit] = useState(false);
+  const onClick = () => {
+    if (isEdit) {
+      setIsEdit(!isEdit)
+    }
+    return
+  }
   return (
     <BrowserRouter>
       <div className="App">
@@ -18,7 +25,7 @@ function App() {
         </header>
         <div className="posts">
           <Routes>
-            <Route path="/" element={<Post />} />
+            <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />}  />
             <Route path="Map" element={<Map />} />
             <Route path="Create" element={<Create />} />
             <Route path="Chat" element={<Chat />} />
@@ -29,7 +36,7 @@ function App() {
 
       <nav className="nav_icon">
         <NavLink to="/">
-          <img alt="icon" className="home_icon" src="/icons/home.svg" />
+          <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
         </NavLink>
         <NavLink to="Map">
           <img alt="icon" className="map_icon" src="icons/locationicon.svg" />

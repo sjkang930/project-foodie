@@ -22,7 +22,7 @@ body {
   float: none;
   width: 100vh;
   margin-left: auto;
-  max-width: 500px;
+  max-width: 340px;
   max-height: 400px;
 }
 
@@ -48,8 +48,8 @@ a img.head_logo {
   display: flex;
 }
 
-.Head a img {
-}
+/* .Head a img {
+} */
 .Head h2 {
   margin-top: 2px;
   margin-left: 10px;
@@ -198,7 +198,7 @@ li.comment_list {
 .comment_list .comment_edit_btn {
   cursor: pointer;
   padding-left: 10px;
-  padding-bottom: 5px;
+  height: 80%;
 }
 
 .file {

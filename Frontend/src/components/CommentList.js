@@ -23,25 +23,25 @@ const CommentList = ({ comments, post_id }) => {
                             <li key={it.comment_id} className="comment_list">
                                 <div className="comment_div">{it.comment}</div>
                                 <div className="comment_btn_div">
-                                <>
-                                    {
-                                        (it.comment_id == thisComment_id && editComment) ?
-                                            <>< button
-                                                onClick={() => {
-                                                    cancelBtn();
-                                                }}>cancel
-                                            </button>
-                                                <button>
-                                                    delete
+                                    <>
+                                        {
+                                            (it.comment_id == thisComment_id && editComment) ?
+                                                <>< button
+                                                    onClick={() => {
+                                                        cancelBtn();
+                                                    }}>cancel
                                                 </button>
-                                            </> : ""
-                                    }
-                                </ >
-                                <button onClick={() => commentClick(it.comment_id)}
-                                    className="comment_edit_btn">
-                                    <img alt="editComment" src="/icons/png.png" />
-                                </button>
-                              
+                                                    <button>
+                                                        delete
+                                                    </button>
+                                                </> : ""
+                                        }
+                                    </ >
+
+                                    <img onClick={() => commentClick(it.comment_id)}
+                                        className="comment_edit_btn" alt="editComment" src="/icons/png.png" />
+
+
                                 </div>
                             </li>)
                     }

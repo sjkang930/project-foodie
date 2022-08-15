@@ -39,10 +39,6 @@ app.get('/images/:filename', (req, res) => {
 })
 
 
-app.get('/create', async (req, res) => {
-
-})
-
 app.post('/create', upload.single('image'), async (req, res) => {
     const { filename, path } = req.file
     const { description, resName } = req.body

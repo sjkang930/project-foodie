@@ -24,7 +24,7 @@ const SearchRestaurant = ({ restaurantName, setResturantName, place, setPlace })
                 <option value="49.2488,-122.9805">Burnaby</option>
                 <option value="49.1913,-122.8490">Surrey</option>
                 <option value="49.1042,-122.6604">Langley</option>
-            </select>
+            </select><br />
             <input
                 className="restaurant"
                 placeholder="Add a Restaurant"

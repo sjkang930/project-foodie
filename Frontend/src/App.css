@@ -89,7 +89,6 @@ a img.head_logo {
   flex-wrap: nowrap;
 }
 
-
 .post_head {
   display: flex;
   justify-content: space-between;
@@ -187,6 +186,18 @@ ul {
   display: flex;
 }
 
+/* li.comment_list {
+  background-color: green;
+  justify-content: flex-end;
+} */
+.comment_list .comment_edit_btn {
+  /* background-color: red; */
+  cursor: pointer;
+  margin-left: 120px;
+  border: none;
+  background-color: white;
+}
+
 .file {
   display: flex;
   justify-content: space-around;
@@ -234,10 +245,9 @@ ul {
   background-color: gray;
 }
 
-
 /* more buttons  */
 
-.more_buttons{
+.more_buttons {
   display: flex;
   flex-direction: column;
   align-items: right;
@@ -249,7 +259,7 @@ ul {
 .more_buttons button {
   cursor: pointer;
   background-color: white;
-  color:#1a5e63;
+  color: #1a5e63;
   min-height: 20px;
   border-left: 1px solid lightgray;
   border-right: 1px solid lightgray;
@@ -264,7 +274,7 @@ ul {
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
   border-top: 1px solid1px solid lightgray;
-  color: #ED4956;
+  color: #ed4956;
 }
 
 .more_buttons .edit_btn {
@@ -275,8 +285,8 @@ ul {
   border-bottom: 1px solid lightgray;
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
-} 
-.img_div{
+}
+.img_div {
   padding-top: 5px;
 }
 

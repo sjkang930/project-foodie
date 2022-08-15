@@ -39,7 +39,6 @@ const Post = () => {
                                     </div>
                                     <div className="location">
                                         {post.resName}
-
                                     </div>
                                 </span>
                             </div>
@@ -83,7 +82,6 @@ const Post = () => {
                         <Comment post_id={post.post_id} />
                     </div>
                 ))
-
             }
         </div>
     );

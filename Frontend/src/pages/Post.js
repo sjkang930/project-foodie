@@ -39,7 +39,6 @@ const Post = () => {
                                     <div className="location">
                                         {post.resName}
                                     </div>
-
                                 </div>
                             </div>
                             <MoreButtons post_id={post.post_id} deleteBtn={deleteBtn} editBtn={() => {
@@ -82,7 +81,6 @@ const Post = () => {
                         <Comment post_id={post.post_id} />
                     </div>
                 ))
-
             }
         </div>
     );

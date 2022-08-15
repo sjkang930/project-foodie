@@ -1,6 +1,6 @@
-// import React from 'react';
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
+import CommentList from "./CommentList";
 
 const Comment = ({ post_id }) => {
     const [comment, setComment] = useState("");
@@ -52,14 +52,10 @@ const Comment = ({ post_id }) => {
                     }}>Post</button>
                 </form>
                 <div>
-                    <ul>
-                        {comments.map(it => <li key={it.comment_id} className="comment_list">{it.post_id === post_id ? it.comment : " "}</li>)}
-                    </ul>
+                    <CommentList comments={comments} post_id={post_id} />
                 </div>
             </section>
         </div>
-
-
     )
 }
 export default Comment;

@@ -4,10 +4,10 @@ import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
 import Edit from "./Edit";
 
-const Post = () => {
+const Post = ({ isEdit, setIsEdit }) => {
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([]);
-    const [isEdit, setIsEdit] = useState(false);
+
     const [newPost, setNewPost] = useState("")
 
     useEffect(() => {
@@ -19,8 +19,8 @@ const Post = () => {
 
     const deleteBtn = async (post_id) => {
         if (window.confirm("Are you sure you want to delete it?")) {
-        setPosts(posts.filter(post => post.post_id !== post_id))
-        await axios.delete(`/delete/${post_id}`)
+            setPosts(posts.filter(post => post.post_id !== post_id))
+            await axios.delete(`/delete/${post_id}`)
         }
     }
 

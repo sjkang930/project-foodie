@@ -12,7 +12,7 @@ const CommentList = ({ comments, setComments, post_id }) => {
     const commentClick = (targetId) => {
         setThisComment_id(targetId)
         setEditComment(!editComment)
-        console.log(editComment)
+        // console.log(editComment)
     }
 
     const deleteBtn = async (id) => {
@@ -22,8 +22,6 @@ const CommentList = ({ comments, setComments, post_id }) => {
         }
         return
     }
-
-
 
     return (
         <div className="commentList">

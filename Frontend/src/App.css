@@ -219,15 +219,16 @@ li.comment_list {
 }
 
 .card {
-  display: block;
-  flex-direction: column;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 5px; /* 5px rounded corners */
   padding-bottom: 80%;
   padding-right: 10px;
   padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: 30px;
+
 }
 .restaurant {
   left: 0;

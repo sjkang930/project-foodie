@@ -8,13 +8,11 @@ const CommentList = ({ comments, setComments, post_id }) => {
     const cancelBtn = () => {
         setEditComment(!editComment)
     }
-
     const commentClick = (targetId) => {
         setThisComment_id(targetId)
         setEditComment(!editComment)
         // console.log(editComment)
     }
-
     const deleteBtn = async (id) => {
         if (window.confirm("Are you sure you want to delete it?")) {
             setComments(comments.filter(it => it.comment_id !== id))
@@ -22,7 +20,6 @@ const CommentList = ({ comments, setComments, post_id }) => {
         }
         return
     }
-
     return (
         <div className="commentList">
             <ul className="comment_wrap">

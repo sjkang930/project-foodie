@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './App.css';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
-import Profile from './pages/Profile';
+import LogIn from './pages/LogIn';
 import Chat from './pages/Chat';
 import Map from './pages/Map';
 import Create from './pages/Create';
@@ -29,7 +29,7 @@ function App() {
             <Route path="Map" element={<Map />} />
             <Route path="Create" element={<Create />} />
             <Route path="Chat" element={<Chat />} />
-            <Route path="Profile" element={<Profile />} />
+            <Route path="LogIn" element={<LogIn />} />
           </Routes>
         </div>
       </div>
@@ -47,7 +47,7 @@ function App() {
         <NavLink to="Chat">
           <img alt="icon" className="chat_icon" src="icons/txt.svg" />
         </NavLink>
-        <NavLink to="Profile">
+        <NavLink to="LogIn">
           <img alt="icon" className="profile_icon" src="icons/profile.svg" />
         </NavLink>
       </nav>

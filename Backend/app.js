@@ -3,10 +3,26 @@ import { getPosts, getPost, createComment, createPost, getComments, getAllCommen
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
-import path from 'path'
+import * as path from 'path'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios'
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import crypto from 'crypto'
+
+const bucketName = process.env.AWS_BUCKET_NAME
+const bucketRegion = process.env.AWS_BUCKET_REGION
+const accessKeyId = process.env.AWS_ACCESS_KEY
+const secretAcessKey = process.env.AWS_SECRET_KEY
+
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId,
+        secretAcessKey,
+    },
+    region: bucketRegion
+})
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -52,7 +68,24 @@ app.post('/create', upload.single('image'), async (req, res) => {
     const { filename, path } = req.file
     const { description, resName } = req.body
     const image_url = `/images/${filename}`
+    // const result = await uploadFile(req.file)
+    // console.log("result", result)
     const post = await createPost(description, image_url, resName)
+    console.log("req.file.buffer", req.file)
+    const params = {
+        Buket: bucketName,
+        Key: req.file.originalname,
+        body: req.file.filename,
+        ContentType: req.file.mimetype,
+
+    }
+
+    const command = new PutObjectCommand(params)
+    console.log("s3", s3.middlewareStack)
+    const middlewareStack = s3.middlewareStack
+    const response = middlewareStack.add(command)
+    console.log("response", response)
+
     res.send({
         description,
         image_url,

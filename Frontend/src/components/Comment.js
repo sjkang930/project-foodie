@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios'
 import CommentList from "./CommentList";
 
@@ -8,6 +8,7 @@ const Comment = ({ post_id }) => {
     const [count, setCount] = useState(0);
     const [postId, setPostId] = useState("");
     const [comment_id, setComment_id] = useState("")
+    const inputRef = useRef()
 
     useEffect(() => {
         (async () => {
@@ -19,6 +20,12 @@ const Comment = ({ post_id }) => {
     }, [])
 
     const submit = async (event) => {
+        if (comment.length < 1) {
+            event.preventDefault()
+            inputRef.current.focus()
+            return
+        }
+
         event.preventDefault()
         const newData = {
             comment,
@@ -30,6 +37,8 @@ const Comment = ({ post_id }) => {
         setComment("")
         setCount(count + 1)
         await axios.post('/posts', { comment, postId })
+
+
     }
 
     return (
@@ -40,6 +49,7 @@ const Comment = ({ post_id }) => {
                 </div>
                 <form className="comment_form" onSubmit={submit}>
                     <input
+                        ref={inputRef}
                         className="input_comments"
                         placeholder="Add a Comment..."
                         value={comment}
@@ -52,7 +62,7 @@ const Comment = ({ post_id }) => {
                     }}>Post</button>
                 </form>
                 <div>
-                    <CommentList comments={comments} setComments={setComments}post_id={post_id} />
+                    <CommentList comments={comments} setComments={setComments} post_id={post_id} />
                 </div>
             </section>
         </div>

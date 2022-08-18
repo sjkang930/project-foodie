@@ -98,6 +98,8 @@ app.post('/restaurant', async (req, res) => {
     }
     const data = await axios.get(url_api, request)
     const restaurants = data.data.businesses
+    console.log("data", data)
+    console.log("restaurants", restaurants)
     res.send(restaurants)
 })
 

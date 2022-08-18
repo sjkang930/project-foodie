@@ -316,3 +316,7 @@ li.comment_list {
     width: 90vw;
   }
 }
+/* Map */
+.Map{
+  width: 100%;
+}

@@ -6,6 +6,9 @@ import Chat from './pages/Chat';
 import Map from './pages/Map';
 import Create from './pages/Create';
 import Post from './pages/Post';
+import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
+
+
 
 function App() {
   const [isEdit, setIsEdit] = useState(false);
@@ -25,7 +28,7 @@ function App() {
         </header>
         <div className="posts">
           <Routes>
-            <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />}  />
+            <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
             <Route path="Map" element={<Map />} />
             <Route path="Create" element={<Create />} />
             <Route path="Chat" element={<Chat />} />

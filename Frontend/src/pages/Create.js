@@ -51,7 +51,7 @@ const Create = () => {
 
     return (
         <div>
-            <Head name="Preivew" />
+            <Head name="Preivew Post" />
             <div className="card">
                 <div className="preview_div">
                     {imageSrc ? <img className='preview' src={imageSrc} alt="preview-img" /> : <div className="inner_div">Preview Image</div>}

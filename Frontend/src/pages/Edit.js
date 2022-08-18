@@ -58,7 +58,7 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
         <div>
 
 
-            <Head name="Edit" />
+            <Head name="Edit Post" />
             <div className="card">
                 <div className="preview_div">
                     {imageSrc || newPost.filename ? <img className='preview' src={imageSrc ? imageSrc : newPost.filename} alt="preview-img" /> : <div className="inner_div">Preview Image</div>}

@@ -3,17 +3,18 @@ import axios from 'axios'
 import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
 import Edit from "./Edit";
+import MapIcon from "../components/MapIcon";
 
 const Post = ({ isEdit, setIsEdit }) => {
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([]);
-
     const [newPost, setNewPost] = useState("")
 
     useEffect(() => {
         (async () => {
             const result = await axios.get('/posts')
             setPosts(result.data)
+            console.log(result.data)
         })()
     }, [])
 
@@ -23,6 +24,7 @@ const Post = ({ isEdit, setIsEdit }) => {
             await axios.delete(`/delete/${post_id}`)
         }
     }
+
 
     return (
         <div div className="posts" >
@@ -68,9 +70,7 @@ const Post = ({ isEdit, setIsEdit }) => {
                                         <img alt="share" src="/icons/share.svg" />
                                     </div>
                                 </div>
-                                <div className="right_icon">
-                                    <img alt="map" src="/icons/map.svg" width="39" />
-                                </div>
+                                <MapIcon post_id={post.post_id} />
                             </div>
                         </section>
                         <section className="user_name_description">

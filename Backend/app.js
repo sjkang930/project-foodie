@@ -30,6 +30,7 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 
+const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
@@ -65,13 +66,15 @@ app.get('/images/:filename', (req, res) => {
 })
 
 app.post('/create', upload.single('image'), async (req, res) => {
-    const { filename, path } = req.file
-    const { description, resName } = req.body
+    const { filename } = req.file
+    const { description, resName, place } = req.body
     const image_url = `/images/${filename}`
     // const result = await uploadFile(req.file)
     // console.log("result", result)
-    const post = await createPost(description, image_url, resName)
-    console.log("req.file.buffer", req.file)
+    const latitude = place.substring(0, place.indexOf(','))
+    const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
+    const post = await createPost(description, image_url, resName, latitude, longitude)
+    console.log("req.body", req.body)
     const params = {
         Buket: bucketName,
         Key: req.file.originalname,
@@ -89,7 +92,9 @@ app.post('/create', upload.single('image'), async (req, res) => {
     res.send({
         description,
         image_url,
-        resName
+        resName,
+        latitude,
+        longitude
     })
 })
 
@@ -106,23 +111,48 @@ app.delete('/delete/:post_id', async (req, res) => {
 app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
     const post_id = req.params.post_id
     const { filename, path } = req.file
-    const { description, resName } = req.body
+    const { description, resName, place } = req.body
+    const latitude = place.substring(0, place.indexOf(','))
+    const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
     const image_url = `/images/${filename}`
-    const post = await updatePost(description, `/images/${filename}`, resName, post_id)
+    const post = await updatePost(description, `/images/${filename}`, resName, latitude, longitude, post_id)
     res.send({
         description,
         image_url,
-        resName
+        resName,
+        latitude,
+        longitude
     })
 })
 
-app.post('/restaurant', async (req, res) => {
+app.get('/restaurant', async (req, res) => {
     const { restaurantName, place } = req.body
     const latitude = place.substring(0, place.indexOf(','))
     const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
+    console.log("place", place)
     console.log("latitude", latitude)
     console.log("longtitude", longitude)
     let url_api = `https://api.yelp.com/v3/businesses/search?term=${restaurantName}&latitude=${latitude}&longitude=${longitude}&radius=40000`
+    let headers = {
+        "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
+    }
+    const request = {
+        headers
+    }
+    const data = await axios.get(url_api, request)
+    const restaurants = data.data.businesses
+    console.log("data", data)
+    console.log("restaurants", restaurants)
+    res.send(restaurants)
+})
+app.post('/mapIcon/:post_id', async (req, res) => {
+    const post_id = req.params.post_id
+    const [post] = await getPost(post_id)
+    const { resName, longitude, latitude } = post
+    console.log(resName)
+    console.log("latitude", latitude)
+    console.log("longtitude", longitude)
+    let url_api = `https://api.yelp.com/v3/businesses/search?term=${resName}&latitude=${latitude}&longitude=${longitude}&radius=40000`
     let headers = {
         "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
     }

@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const LogIn = () => {
+    const [user, setUser] = useState("")
+    const logInBtn = () => {
+
+    }
     return (
-        <div>
-            <div className="Profile">
+        <div className="Profile">
+            <form>
                 <input
-                    placeholder="Email">
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    id="email"
+                >
                 </input>
                 <input
-                    placeholder="Password">
+                    placeholder="Password"
+                    type="password"
+                    name="password"
+                    id="password"
+                >
                 </input>
-                <button>
+                <button onClick={() => {
+                     
+                }}
+                    type="submit"
+                >
                     Log In
                 </button>
-            </div>
+            </form>
         </div>
     )
 }

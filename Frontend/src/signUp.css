@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap");
+div.signup {
+  width: 100vw;
+  height: 100vh;
+  background: url("/icons/backgroundgradient.png");
+}
+div.signUpForm > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+div.signUpForm > form > input {
+  width: 315px;
+  height: 53px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 37, 39, 0.75);
+  opacity: 75%;
+}
+div.signUpForm > form > button {
+  text-align: center;
+  width: 100%;
+  height: 53px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: #1a5e63;
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}

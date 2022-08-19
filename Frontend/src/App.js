@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import './App.css';
+import './signUp.css';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
-import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
 import Chat from './pages/Chat';
 import Map from './pages/Map';
 import Create from './pages/Create';
 import Post from './pages/Post';
+import Head from './components/Head';
 import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
-
-
 
 function App() {
   const [isEdit, setIsEdit] = useState(false);
@@ -21,18 +21,13 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <header>
-          <h2>
-            <a href="/"><img className="head_logo" src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
-          </h2>
-        </header>
         <div className="posts">
           <Routes>
             <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
             <Route path="Map" element={<Map />} />
             <Route path="Create" element={<Create />} />
             <Route path="Chat" element={<Chat />} />
-            <Route path="LogIn" element={<LogIn />} />
+            <Route path="SignUp" element={<SignUp />} />
           </Routes>
         </div>
       </div>
@@ -50,7 +45,7 @@ function App() {
         <NavLink to="Chat">
           <img alt="icon" className="chat_icon" src="icons/txt.svg" />
         </NavLink>
-        <NavLink to="LogIn">
+        <NavLink to="SignUp">
           <img alt="icon" className="profile_icon" src="icons/profile.svg" />
         </NavLink>
       </nav>

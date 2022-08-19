@@ -6,7 +6,6 @@ const SearchRestaurant = ({ restaurantName, setResturantName, place, setPlace })
 
     const changePlace = (e) => {
         setPlace(e.target.value)
-        console.log("place", place)
     }
 
     const onChange = async (e) => {

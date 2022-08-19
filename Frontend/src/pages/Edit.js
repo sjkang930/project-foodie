@@ -33,6 +33,7 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
         data.append('image', file)
         data.append('description', description)
         data.append('resName', restaurantName)
+        data.append('place', place)
         const result = await axios.put(`/edit/${post_id}`, data)
         const { image_url } = result.data
         setPosts(posts.map(it => it.post_id !== newPost.post_id ? it : { filename: image_url, description, resName: restaurantName }))

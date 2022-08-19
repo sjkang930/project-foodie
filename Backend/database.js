@@ -25,18 +25,18 @@ export async function getPost(post_id) {
     return rows
 }
 
-export async function createPost(description, filename, resName) {
+export async function createPost(description, filename, resName, latitude, longitude) {
     const [result] = await pool.query(`
-    INSERT INTO posts (description, filename, resName)
-    VALUES(?,?,?)
-    `, [description, filename, resName])
+    INSERT INTO posts (description, filename, resName, latitude, longitude)
+    VALUES(?,?,?,?,?)
+    `, [description, filename, resName, latitude, longitude])
     const post_id = result.insertId
     return getPost(post_id)
 }
 
-export async function updatePost(description, filename, resName, post_id) {
-    const query = `UPDATE posts SET description = ?, filename = ?, resName = ? WHERE post_id = ?`;
-    const [result] = await pool.query(query, [description, filename, resName, post_id]);
+export async function updatePost(description, filename, resName, latitude, longitude, post_id,) {
+    const query = `UPDATE posts SET description = ?, filename = ?, resName = ?, latitude = ?, longitude =? WHERE post_id = ?`;
+    const [result] = await pool.query(query, [description, filename, resName, latitude, longitude, post_id]);
     const post = getPost(post_id)
     return post;
 }

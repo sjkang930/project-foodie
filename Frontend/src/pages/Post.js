@@ -3,18 +3,19 @@ import axios from 'axios'
 import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
 import Edit from "./Edit";
+import MapIcon from "../components/MapIcon";
 import Head from "../components/Head";
 
 const Post = ({ isEdit, setIsEdit }) => {
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([]);
-
     const [newPost, setNewPost] = useState("")
 
     useEffect(() => {
         (async () => {
             const result = await axios.get('/posts')
             setPosts(result.data)
+            console.log(result.data)
         })()
     }, [])
 
@@ -24,6 +25,7 @@ const Post = ({ isEdit, setIsEdit }) => {
             await axios.delete(`/delete/${post_id}`)
         }
     }
+
 
     return (
         <><div className="head_logo">
@@ -80,19 +82,22 @@ const Post = ({ isEdit, setIsEdit }) => {
                                         <img alt="map" src="/icons/map.svg" width="39" />
                                     </div>
                                 </div>
-                            </section>
-                            <section className="user_name_description">
-                                <div className="user_name">
-                                    suji kang
-                                </div>
-                                <div className="description">
-                                    {post.description}
-                                </div>
-                            </section>
-                            <Comment post_id={post.post_id} />
-                        </div>
-                    ))}
-            </div></>
+                                <MapIcon post_id={post.post_id} />
+                            </div>
+                        </section>
+                        <section className="user_name_description">
+                            <div className="user_name">
+                                suji kang
+                            </div>
+                            <div className="description">
+                                {post.description}
+                            </div>
+                        </section>
+                        <Comment post_id={post.post_id} />
+                    </div>
+                ))
+            }
+        </div>
     );
 }
 

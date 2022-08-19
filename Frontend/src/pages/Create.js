@@ -17,7 +17,6 @@ const Create = () => {
     const [imageSrc, setImageSrc] = useState('');
 
     const submit = async event => {
-        console.log(imageSrc)
         event.preventDefault()
         if (description.length < 1) {
             descriptionInput.current.focus();
@@ -31,6 +30,7 @@ const Create = () => {
         data.append('image', file)
         data.append('description', description)
         data.append('resName', restaurantName)
+        data.append('place', place)
         await axios.post('/create', data)
         alert("successfully posted")
         navigate('/', { replace: true });

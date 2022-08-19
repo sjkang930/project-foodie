@@ -25,6 +25,7 @@
     "react-scripts": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "prisma": "^4.2.1"
   }
 }

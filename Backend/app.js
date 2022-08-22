@@ -10,6 +10,9 @@ import axios from 'axios'
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
+import cookieParser from 'cookieParser'
+import cookieSession from 'cookieSession'
+
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const bucketRegion = process.env.AWS_BUCKET_REGION
@@ -30,6 +33,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 dotenv.config();
 app.use(express.json());
+app.use(cookieParser())
+app.use(cookieSession({
+    name: 'whoami',
+    httpOnly: "true",
+    keys: ['key1', 'key2'],
+    maxAge: 24 * 60 * 60 * 1000 //24hrs
+}))
 
 const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
@@ -169,7 +179,7 @@ app.post('/mapIcon/:post_id', async (req, res) => {
 
 app.post('/signup', async (req, res) => {
     const { firstName, lastName, email, password } = req.body
-    const hashedPassword = await bcrypt.hash(password, 9)    
+    const hashedPassword = await bcrypt.hash(password, 9)
     const user = await createUser(firstName, lastName, email, hashedPassword)
     console.log(user)
     res.send(user)

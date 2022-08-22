@@ -6,17 +6,15 @@ const SignUp = () => {
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    console.log(firstName)
 
     const signUp = async event => {
-
         event.preventDefault()
         const data = new FormData()
         data.append("firstName", firstName)
         data.append("lastName", lastName)
         data.append("email", email)
         data.append("password", password)
-        await axios.post('/signup', {firstName, lastName, email, password})
+        await axios.post('/signup', { firstName, lastName, email, password })
         console.log("data", data)
     }
 
@@ -62,6 +60,10 @@ const SignUp = () => {
                     </input>
                     <button type="submit"> Sign Up</button>
                 </form>
+            </div>
+            <div className="logintextwrap">
+                <div className="logintext">Already singed Up?</div>
+                <div className="logIn">Log In</div>
             </div>
             <div className="signupthridwrap">
                 <div className="thirdparty">

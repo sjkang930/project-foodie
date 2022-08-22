@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios'
 import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
 import Edit from "./Edit";
 import MapIcon from "../components/MapIcon";
 import Head from "../components/Head";
+import { mapDataContext } from "../App";
 
 const Post = ({ isEdit, setIsEdit }) => {
+    const { setMapData } = useContext(mapDataContext)
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([]);
-
     const [newPost, setNewPost] = useState("")
 
     useEffect(() => {
@@ -77,7 +78,7 @@ const Post = ({ isEdit, setIsEdit }) => {
                                             <img alt="share" src="/icons/share.svg" />
                                         </div>
                                     </div>
-                                    <MapIcon />
+                                    <MapIcon post_id={post.post_id} setMapData={setMapData} posts={posts} />
                                 </div>
                             </section>
                             <section className="user_name_description">

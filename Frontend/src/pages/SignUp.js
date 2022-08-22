@@ -7,13 +7,17 @@ const SignUp = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     console.log(firstName)
+
     const signUp = async event => {
+
+        event.preventDefault()
         const data = new FormData()
-        data.append(firstName)
-        data.append(lastName)
-        data.append(email)
-        data.append(password)
-        await axios.post('/signup', data)
+        data.append("firstName", firstName)
+        data.append("lastName", lastName)
+        data.append("email", email)
+        data.append("password", password)
+        await axios.post('/signup', {firstName, lastName, email, password})
+        console.log("data", data)
     }
 
     return (

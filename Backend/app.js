@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment } from './database.js'
+import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment, createUser, getUsers, getUser } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import axios from 'axios'
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from 'crypto'
+import bcrypt from 'bcrypt'
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const bucketRegion = process.env.AWS_BUCKET_REGION
@@ -164,6 +165,14 @@ app.post('/mapIcon/:post_id', async (req, res) => {
     console.log("data", data)
     console.log("restaurants", restaurants)
     res.send(restaurants)
+})
+
+app.post('/signup', async (req, res) => {
+    const { firstName, lastName, email, password } = req.body
+    const hashedPassword = await bcrypt.hash(password, 9)    
+    const user = await createUser(firstName, lastName, email, hashedPassword)
+    console.log(user)
+    res.send(user)
 })
 
 app.use(function (err, req, res, next) {

@@ -30,3 +30,17 @@ div.signUpForm > form > button {
   font-size: 16px;
   cursor: pointer;
 }
+
+.logintextwrap{
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+    opacity: 80%;
+    position: relative;
+    font-size: 18px;
+}
+.logIn{
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

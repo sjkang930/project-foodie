@@ -10,15 +10,13 @@ import axios from 'axios'
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
-import cookieParser from 'cookieParser'
-import cookieSession from 'cookieSession'
-
+import cookieSession from "cookie-session"
+import cookieParser from 'cookie-parser'
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const bucketRegion = process.env.AWS_BUCKET_REGION
 const accessKeyId = process.env.AWS_ACCESS_KEY
 const secretAcessKey = process.env.AWS_SECRET_KEY
-
 
 const s3 = new S3Client({
     credentials: {
@@ -33,7 +31,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 dotenv.config();
 app.use(express.json());
-app.use(cookieParser())
 app.use(cookieSession({
     name: 'whoami',
     httpOnly: "true",
@@ -172,7 +169,6 @@ app.post('/signup', async (req, res) => {
     const { firstName, lastName, email, password } = req.body
     const hashedPassword = await bcrypt.hash(password, 9)
     const user = await createUser(firstName, lastName, email, hashedPassword)
-    console.log(user)
     res.send(user)
 })
 

@@ -45,35 +45,42 @@ div.login {
   position: relative;
   font-size: 18px;
 }
-.login {
+
+.logIn {
   cursor: pointer;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 div.loginform > form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  div.loginform > form > input {
-    width: 315px;
-    height: 53px;
-    border-radius: 10px;
-    border: 1px solid rgba(10, 37, 39, 0.75);
-    opacity: 75%;
-    margin: 5px;
-  }
-  div.loginform > form > button {
-    text-align: center;
-    width: 315px;
-    height: 53px;
-    border-radius: 10px;
-    margin: 5px;
-    border: 1px solid transparent;
-    background-color: #1a5e63;
-    color: #fff;
-    font-weight: 500;
-    font-size: 16px;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+div.loginform > form > input {
+  width: 315px;
+  height: 53px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 37, 39, 0.75);
+  opacity: 75%;
+  margin: 5px;
+}
+div.loginform > form > button {
+  text-align: center;
+  width: 315px;
+  height: 53px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid transparent;
+  background-color: #1a5e63;
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* .newhere {
+  display: flex;
+  flex-direction: column;
+  background-color: hotpink;
+} */

@@ -59,13 +59,13 @@ const LogIn = () => {
                 </form>
             </div>
             <div className="logintextwrap">
-                <>
+                <div className="newhere">
                     <div className="logintext">New Here?</div>
                     <div onClick={()=>{
 
                     }}
                     className="logIn">Sign Up</div>
-                </>
+                </div>
                 <>
                     <div className="forgotPassword">Forgot Password?</div>
                 </>

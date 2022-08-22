@@ -15,16 +15,32 @@ div.signUpForm > form > input {
   border-radius: 10px;
   border: 1px solid rgba(10, 37, 39, 0.75);
   opacity: 75%;
+  margin: 5px;
 }
 div.signUpForm > form > button {
   text-align: center;
-  width: 100%;
+  width:  315px;
   height: 53px;
   border-radius: 10px;
+  margin: 5px;
   border: 1px solid transparent;
   background-color: #1a5e63;
   color: #fff;
   font-weight: 500;
   font-size: 16px;
   cursor: pointer;
+}
+
+.logintextwrap{
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+    opacity: 80%;
+    position: relative;
+    font-size: 18px;
+}
+.logIn{
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

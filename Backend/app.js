@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment } from './database.js'
+import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment, createUser, getUsers, getUser } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
@@ -9,6 +9,10 @@ import { fileURLToPath } from 'url';
 import axios from 'axios'
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from 'crypto'
+import bcrypt from 'bcrypt'
+import cookieParser from 'cookieParser'
+import cookieSession from 'cookieSession'
+
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const bucketRegion = process.env.AWS_BUCKET_REGION
@@ -29,6 +33,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 dotenv.config();
 app.use(express.json());
+app.use(cookieParser())
+app.use(cookieSession({
+    name: 'whoami',
+    httpOnly: "true",
+    keys: ['key1', 'key2'],
+    maxAge: 24 * 60 * 60 * 1000 //24hrs
+}))
 
 const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
@@ -155,6 +166,14 @@ app.post('/mapIcon/:post_id', async (req, res) => {
     const [restaurants] = data.data.businesses
     console.log("restaurants.coordinates", restaurants.coordinates)
     res.send(restaurants)
+})
+
+app.post('/signup', async (req, res) => {
+    const { firstName, lastName, email, password } = req.body
+    const hashedPassword = await bcrypt.hash(password, 9)
+    const user = await createUser(firstName, lastName, email, hashedPassword)
+    console.log(user)
+    res.send(user)
 })
 
 app.use(function (err, req, res, next) {

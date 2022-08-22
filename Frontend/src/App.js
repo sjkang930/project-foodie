@@ -27,36 +27,36 @@ function App() {
   return (
     <mapDataContext.Provider value={memoziedMap}>
       <BrowserRouter>
-        <div className="App">
-          <div className="posts">
-            <Routes>
-              <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
-              <Route path="Map" element={<Map />} />
-              <Route path="Create" element={<Create />} />
-              <Route path="Chat" element={<Chat />} />
-              <Route path="SignUp" element={<SignUp />} />
-            </Routes>
+      <div className="App">
+        <div className="posts">
+          <Routes>
+            <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
+            <Route path="Map" element={<Map />} />
+            <Route path="Create" element={<Create />} />
+            <Route path="Chat" element={<Chat />} />
+            <Route path="signup" element={<SignUp />} />
+          </Routes>
           </div>
         </div>
 
         <nav className="nav_icon">
-          <NavLink to="/">
-            <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
-          </NavLink>
-          <NavLink to="Map">
-            <img alt="icon" className="map_icon" src="icons/locationicon.svg" />
-          </NavLink>
-          <NavLink to="Create">
-            <img alt="icon" className="post_icon" src="icons/post-new.svg" />
-          </NavLink>
-          <NavLink to="Chat">
-            <img alt="icon" className="chat_icon" src="icons/txt.svg" />
-          </NavLink>
-          <NavLink to="SignUp">
-            <img alt="icon" className="profile_icon" src="icons/profile.svg" />
-          </NavLink>
-        </nav>
-      </BrowserRouter>
+        <NavLink to="/">
+          <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
+        </NavLink>
+        <NavLink to="Map">
+          <img alt="icon" className="map_icon" src="icons/locationicon.svg" />
+        </NavLink>
+        <NavLink to="Create">
+          <img alt="icon" className="post_icon" src="icons/post-new.svg" />
+        </NavLink>
+        <NavLink to="Chat">
+          <img alt="icon" className="chat_icon" src="icons/txt.svg" />
+        </NavLink>
+        <NavLink to="signup">
+          <img alt="icon" className="profile_icon" src="icons/profile.svg" />
+        </NavLink>
+      </nav>
+    </BrowserRouter>
     </mapDataContext.Provider>
   );
 }

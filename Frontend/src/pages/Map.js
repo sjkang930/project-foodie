@@ -30,6 +30,14 @@ const Map = () => {
 
     }, [])
 
+    const onMapLoad = () => {
+        if (mapData.id) {
+            setMarkers([
+                { lat: mapData.coordinates.latitude, lng: mapData.coordinates.longitude, time: new Date(), }
+            ])
+        }
+    }
+
     if (loadError) {
         return "Error loading maps";
     }
@@ -42,6 +50,8 @@ const Map = () => {
                     center={mapData.id ? { lat: mapData.coordinates.latitude, lng: mapData.coordinates.longitude } : center}
                     zoom={15}
                     onClick={onMapClick}
+                    onLoad={onMapLoad}
+
                 >
                     {markers.map(marker =>
                         <Marker

@@ -22,6 +22,7 @@ const Create = () => {
             descriptionInput.current.focus();
             return;
         }
+
         if (!file) {
             fileRef.current.focus();
             return;

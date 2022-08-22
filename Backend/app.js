@@ -136,13 +136,10 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
     })
 })
 
-app.get('/restaurant', async (req, res) => {
+app.post('/restaurant', async (req, res) => {
     const { restaurantName, place } = req.body
     const latitude = place.substring(0, place.indexOf(','))
     const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
-    console.log("place", place)
-    console.log("latitude", latitude)
-    console.log("longtitude", longitude)
     let url_api = `https://api.yelp.com/v3/businesses/search?term=${restaurantName}&latitude=${latitude}&longitude=${longitude}&radius=40000`
     let headers = {
         "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
@@ -152,17 +149,12 @@ app.get('/restaurant', async (req, res) => {
     }
     const data = await axios.get(url_api, request)
     const restaurants = data.data.businesses
-    console.log("data", data)
-    console.log("restaurants", restaurants)
     res.send(restaurants)
 })
 app.post('/mapIcon/:post_id', async (req, res) => {
     const post_id = req.params.post_id
     const [post] = await getPost(post_id)
     const { resName, longitude, latitude } = post
-    console.log(resName)
-    console.log("latitude", latitude)
-    console.log("longtitude", longitude)
     let url_api = `https://api.yelp.com/v3/businesses/search?term=${resName}&latitude=${latitude}&longitude=${longitude}&radius=40000`
     let headers = {
         "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
@@ -171,9 +163,8 @@ app.post('/mapIcon/:post_id', async (req, res) => {
         headers
     }
     const data = await axios.get(url_api, request)
-    const restaurants = data.data.businesses
-    console.log("data", data)
-    console.log("restaurants", restaurants)
+    const [restaurants] = data.data.businesses
+    console.log("restaurants.coordinates", restaurants.coordinates)
     res.send(restaurants)
 })
 

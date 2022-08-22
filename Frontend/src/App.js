@@ -27,7 +27,7 @@ function App() {
             <Route path="Map" element={<Map />} />
             <Route path="Create" element={<Create />} />
             <Route path="Chat" element={<Chat />} />
-            <Route path="SignUp" element={<SignUp />} />
+            <Route path="signup" element={<SignUp />} />
           </Routes>
         </div>
       </div>
@@ -45,7 +45,7 @@ function App() {
         <NavLink to="Chat">
           <img alt="icon" className="chat_icon" src="icons/txt.svg" />
         </NavLink>
-        <NavLink to="SignUp">
+        <NavLink to="signup">
           <img alt="icon" className="profile_icon" src="icons/profile.svg" />
         </NavLink>
       </nav>

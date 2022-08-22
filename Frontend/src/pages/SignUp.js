@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const firstNameInput = useRef();
+    const lastNameInput = useRef();
+    const emailInput = useRef();
+    const passwordInput = useRef();
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate();
 
     const signUp = async event => {
         event.preventDefault()
+        if (firstName.length < 1) {
+            firstNameInput.current.focus();
+            return;
+        }
+        if (lastName.length < 1) {
+            lastNameInput.current.focus();
+            return;
+        }
+        if (email.length < 1) {
+            emailInput.current.focus();
+            return;
+        }
+        if (password.length < 1) {
+            passwordInput.current.focus();
+            return;
+        }
         const data = new FormData()
         data.append("firstName", firstName)
         data.append("lastName", lastName)
         data.append("email", email)
         data.append("password", password)
         await axios.post('/signup', { firstName, lastName, email, password })
-        console.log("data", data)
+        alert("successfully signup")
     }
 
     return (
@@ -29,6 +51,7 @@ const SignUp = () => {
             <div className="signUpForm">
                 <form onSubmit={signUp}>
                     <input
+                        ref={firstNameInput}
                         onChange={(e) => setFirstName(e.target.value)}
                         className="inputFirstName"
                         placeholder="First Name"
@@ -36,6 +59,7 @@ const SignUp = () => {
                         name="firstname"
                     ></input>
                     <input
+                        ref={lastNameInput}
                         onChange={(e) => setLastName(e.target.value)}
                         className="lastName"
                         placeholder="Last Name"
@@ -43,6 +67,7 @@ const SignUp = () => {
                         name="lastname"
                     ></input>
                     <input
+                        ref={emailInput}
                         onChange={(e) => setEmail(e.target.value)}
                         className="email"
                         placeholder="Email"
@@ -51,6 +76,7 @@ const SignUp = () => {
                     >
                     </input>
                     <input
+                        ref={passwordInput}
                         onChange={(e) => setPassword(e.target.value)}
                         className="password"
                         placeholder="Password"
@@ -63,7 +89,10 @@ const SignUp = () => {
             </div>
             <div className="logintextwrap">
                 <div className="logintext">Already singed Up?</div>
-                <div className="logIn">Log In</div>
+                <div onClick={() => {
+                    navigate('/login', { replace: true });
+                }}
+                    className="logIn">Log In</div>
             </div>
             <div className="signupthridwrap">
                 <div className="thirdparty">

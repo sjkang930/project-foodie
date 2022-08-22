@@ -7,6 +7,7 @@ import Chat from './pages/Chat';
 import Map from './pages/Map';
 import Create from './pages/Create';
 import Post from './pages/Post';
+import LogIn from './pages/LogIn';
 import Head from './components/Head';
 import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="Create" element={<Create />} />
             <Route path="Chat" element={<Chat />} />
             <Route path="signup" element={<SignUp />} />
+            <Route path="login" element={<LogIn />} />
           </Routes>
         </div>
       </div>

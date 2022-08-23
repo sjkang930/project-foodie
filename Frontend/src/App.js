@@ -16,6 +16,8 @@ export const mapDataContext = React.createContext()
 function App() {
   const [isEdit, setIsEdit] = useState(false);
   const [mapData, setMapData] = useState([])
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const onClick = () => {
     if (isEdit) {
       setIsEdit(!isEdit)

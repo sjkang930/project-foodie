@@ -148,6 +148,21 @@ app.post('/restaurant', async (req, res) => {
     const restaurants = data.data.businesses
     res.send(restaurants)
 })
+app.post("/hours/:id", async (req, res) => {
+    const id = req.params.id
+    if (id) {
+        let url_api = `https://api.yelp.com/v3/businesses/${id}`
+        let headers = {
+            "Authorization": `Bearer ROF0HVCZJhK3MOwM_BdaB_bIodzpNbWdhHMDsXZxF7bRg35xwwQRscs_ZJQdV7HKKonIdb5iyHpfY-sabDbugiUfBkDDg4tVymAhpAx7Rs8ratmrpPnMW3hqMtSJYnYx`,
+        }
+        const request = {
+            headers
+        }
+        const data = await axios.get(url_api, request)
+        const restaurant = data.data
+        res.send(restaurant)
+    }
+})
 app.post('/mapIcon/:post_id', async (req, res) => {
     const post_id = req.params.post_id
     const [post] = await getPost(post_id)
@@ -161,7 +176,6 @@ app.post('/mapIcon/:post_id', async (req, res) => {
     }
     const data = await axios.get(url_api, request)
     const [restaurants] = data.data.businesses
-    console.log("restaurants.coordinates", restaurants.coordinates)
     res.send(restaurants)
 })
 

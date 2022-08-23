@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap");
+
+div.restaurant_info{
+    font-family: "Nanum Pen Script";
+    overflow: scroll;
+}
+div.restaurant_info > h1 {
+    color: #00bfb2;
+}
+div.restaurant_info > h3 {
+    color: #00bfb2;
+    font-size: 16px;
+}
+div.restaurant_info > ul {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    text-align: center;
+    font-size: 15px;
+    border: 1px solid #00bfb2;
+}
+div.restaurant_info > ul > img {
+    width: 200px;
+    text-align: center;
+    margin-left: 0;
+}
+div.RestaurantInfo {
+    display: flex;
+    justify-content: center;
+}
+div.RestaurantInfo > button {
+    text-align: center;
+    margin-top: 10px;
+    width: 25em;
+    height: 53px;
+    /* border-radius: 10px; */
+    border: 1px solid transparent;
+    background-color: #00BFB2;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+}

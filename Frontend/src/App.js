@@ -1,6 +1,7 @@
 import React, { useState, createContext, useMemo } from 'react'
 import './App.css';
 import './signUp.css';
+import './map.css'
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import Chat from './pages/Chat';

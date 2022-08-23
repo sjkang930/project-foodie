@@ -2,7 +2,9 @@ import React, { useState, useCallback, useEffect, useMemo, useContext } from 're
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow, useLoadScript } from '@react-google-maps/api';
 import GoogleMapReact from 'google-map-react';
 import Head from '../components/Head';
+import RestaurantInfo from '../components/RestaurantInfo';
 import { mapDataContext } from '../App';
+import axios from "axios"
 
 
 const containerStyle = {
@@ -11,13 +13,22 @@ const containerStyle = {
 };
 const Map = () => {
     const { mapData } = useContext(mapDataContext)
-    console.log("mapData", mapData)
     const [markers, setMarkers] = useState([])
     const [center, setCenter] = useState({ lat: 49.2835, lng: -123.1153 })
+    const [selected, setSelected] = useState(null)
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: 'AIzaSyAcaYDEWjjYRwiUJACWEOHC_HA32gaO7k0',
         libraries: ["places"],
     })
+    const [business, setBusiness] = useState("")
+    const oneWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    useEffect(() => {
+        (async () => {
+            const id = mapData.id
+            const result = await axios.post(`/hours/${id}`)
+            setBusiness(result.data)
+        })()
+    }, [])
     const onMapClick = useCallback((event) => {
         setMarkers((current) => [
             ...current,
@@ -51,19 +62,41 @@ const Map = () => {
                     zoom={15}
                     onClick={onMapClick}
                     onLoad={onMapLoad}
-
                 >
                     {markers.map(marker =>
                         <Marker
                             key={marker.time.toISOString()}
-                            position={mapData.id ? { lat: mapData.coordinates.latitude, lng: mapData.coordinates.longitude } : { lat: marker.lat, lng: marker.lng }}
+                            position={{ lat: marker.lat, lng: marker.lng }}
                             icon={{
                                 url: '/icons/logo_burger.svg',
-                                scaledSize: new window.google.maps.Size(30, 30),
+                                scaledSize: new window.google.maps.Size(40, 40),
                                 origin: new window.google.maps.Point(0, 0),
                                 anchor: new window.google.maps.Point(15, 15),
-                            }} />)}
+                            }}
+                            onClick={() => {
+                                setSelected(marker)
+                            }}
+                        />)}
+                    {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
+                        onCloseClick={() => { setSelected(null) }}>
+                        <div className='restaurant_info'>
+                            <h1>{mapData.name}</h1>
+                            <h2>Address: {mapData.location.address1}</h2>
+                            <h2>{mapData.location.city} {mapData.location.state}, {mapData.location.zip_code}</h2>
+                            <h3>Phone: {mapData.display_phone}</h3>
+                            <ul>Open hours:
+                                {business ? (business.hours[0].open.map(hours => {
+                                    return (<li key={hours.day}>  {oneWeek[hours.day]}: {hours.start} ~ {hours.end} </li>)
+                                })) : null}
+                                <img className="restaurant_img" alt="restaurant_img" src={business ? business.image_url : "/icons/map.svg"} width="39" />
+                            </ul>
+                            <div className="restaurant_img_div">
+
+                            </div>
+                        </div>
+                    </InfoWindow>) : null}
                 </GoogleMap>
+                <RestaurantInfo business={business} />
             </div>
         </>
     )
@@ -73,22 +106,3 @@ const Map = () => {
 export default Map;
 
 
-
-// const coordinates = { lat: 49.2835, lng: -123.1153 }
-
-// return (
-//     <div className='Map'>
-//         <GoogleMapReact
-//             bootstrapURLKeys={{ key: 'AIzaSyAcaYDEWjjYRwiUJACWEOHC_HA32gaO7k0' }}
-//             defaultCenter={coordinates}
-//             center={coordinates}
-//             defaultZoom={12}
-//             margin={[50, 50, 50, 50]}
-//             yesIWantToUseGoogleMapApiInternals
-//             options={''}
-//             onChang={''}
-//             onChildClick={''}
-//         >
-//         </GoogleMapReact>
-//     </div>
-// )    

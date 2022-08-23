@@ -36,8 +36,18 @@ const SignUp = () => {
         data.append("lastName", lastName)
         data.append("email", email)
         data.append("password", password)
-        await axios.post('/signup', { firstName, lastName, email, password })
+        const result = await axios.post('/signup', { firstName, lastName, email, password })
+        console.log("result.data", result.data)
+        if (!(result.data)) {
+            alert("This email already existed")
+            setFirstName("")
+            setLastName("")
+            setPassword("")
+            setEmail("")
+            return
+        }
         alert("successfully signup")
+        navigate('/login', { replace: true });
     }
 
     return (
@@ -54,6 +64,7 @@ const SignUp = () => {
                         ref={firstNameInput}
                         onChange={(e) => setFirstName(e.target.value)}
                         className="inputFirstName"
+                        value={firstName}
                         placeholder="First Name"
                         type="text"
                         name="firstname"
@@ -62,6 +73,7 @@ const SignUp = () => {
                         ref={lastNameInput}
                         onChange={(e) => setLastName(e.target.value)}
                         className="lastName"
+                        value={lastName}
                         placeholder="Last Name"
                         type="text"
                         name="lastname"
@@ -70,6 +82,7 @@ const SignUp = () => {
                         ref={emailInput}
                         onChange={(e) => setEmail(e.target.value)}
                         className="email"
+                        value={email}
                         placeholder="Email"
                         type="email"
                         name="email"
@@ -77,8 +90,11 @@ const SignUp = () => {
                     </input>
                     <input
                         ref={passwordInput}
+                        rules={["minLength", "specialChar", "number", "capital", "match"]}
+                        minLength={8}
                         onChange={(e) => setPassword(e.target.value)}
                         className="password"
+                        value={password}
                         placeholder="Password"
                         type="password"
                         name="password"

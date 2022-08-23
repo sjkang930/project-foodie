@@ -22,9 +22,16 @@ const LogIn = () => {
         const data = new FormData()
         data.append("email", email)
         data.append("password", password)
-        await axios.post('/login', { email, password })
-        console.log("data", data)
-        navigate('/', { replace: true });
+        const result = await axios.post('/login', { email, password })
+        console.log(result)
+        if (result.data.verified) {
+            navigate('/', { replace: true });
+            return
+        }
+        alert("Invalid email or password!")
+        setEmail("")
+        setPassword("")
+        return
     }
 
     return (
@@ -41,6 +48,7 @@ const LogIn = () => {
                         ref={emailInput}
                         onChange={(e) => setEmail(e.target.value)}
                         className="inputemail"
+                        value={email}
                         placeholder="Email"
                         type="email"
                         name="email"
@@ -48,23 +56,26 @@ const LogIn = () => {
                     </input>
                     <input
                         ref={passwordInput}
+                        rules={["minLength", "specialChar", "number", "capital", "match"]}
+                        minLength={8}
                         onChange={(e) => setPassword(e.target.value)}
                         className="inputpassword"
+                        value={password}
                         placeholder="Password"
                         type="password"
                         name="password"
                     >
                     </input>
-                    <button type="submit"> Log In</button>
+                    <button onClick={logInBtn} type="submit"> Log In</button>
                 </form>
             </div>
             <div className="logintextwrap">
                 <div className="newhere">
                     <div className="logintext">New Here?</div>
-                    <div onClick={()=>{
-
+                    <div onClick={() => {
+                        navigate('/signup', { replace: true });
                     }}
-                    className="logIn">Sign Up</div>
+                        className="logIn">Sign Up</div>
                 </div>
                 <>
                     <div className="forgotPassword">Forgot Password?</div>

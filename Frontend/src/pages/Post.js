@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios'
 import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
-import Edit from "./Edit";
+import Edit from "../components/Edit";
 import MapIcon from "../components/MapIcon";
 import Head from "../components/Head";
 import { mapDataContext } from "../App";

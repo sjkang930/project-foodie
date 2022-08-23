@@ -181,9 +181,23 @@ app.post('/mapIcon/:post_id', async (req, res) => {
 
 app.post('/signup', async (req, res) => {
     const { firstName, lastName, email, password } = req.body
+    const users = await getUsers()
+    const isItExisted = users.find(user => user.email === email)
+    if (isItExisted) {
+        res.send(false)
+        return
+    }
     const hashedPassword = await bcrypt.hash(password, 9)
     const user = await createUser(firstName, lastName, email, hashedPassword)
     res.send(user)
+})
+
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body
+    const users = await getUsers()
+    const thisUser = users.find(user => user.email === email)
+    const verified = await bcrypt.compare(password, thisUser.password)
+    res.send({ verified, thisUser })
 })
 
 app.use(function (err, req, res, next) {

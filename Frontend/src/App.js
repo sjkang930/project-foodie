@@ -47,12 +47,12 @@ function App() {
             <div className="posts">
               <Routes>
                 <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
-                <Route path="Map" element={<Map />} />
+                <Route path="Map" element={<Map business={business} setBusiness={setBusiness} />} />
                 <Route path="Create" element={<Create />} />
                 <Route path="Chat" element={<Chat />} />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="login" element={<LogIn />} />
-                <Route path="restaurant" element={<RestaurantDetails />} />
+                <Route path="restaurant" element={<RestaurantDetails business={business} />} />
               </Routes>
             </div>
           </div>

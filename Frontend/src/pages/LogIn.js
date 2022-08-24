@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from 'react';
 import axios from "axios";
-import { loginEmailContext } from '../App';
+import { loginEmailContext, logInContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
@@ -8,6 +8,7 @@ const LogIn = () => {
     const passwordInput = useRef();
     const [password, setPassword] = useState("")
     const { email, setEmail } = useContext(loginEmailContext) 
+    const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext) 
     const navigate = useNavigate();
 
     const logInBtn = async event => {
@@ -26,6 +27,7 @@ const LogIn = () => {
         const result = await axios.post('/login', { email, password })
         console.log(result)
         if (result.data.verified) {
+            setIsItLoggedIn(!isItLoggedIn)
             navigate('/', { replace: true });
             return
         }

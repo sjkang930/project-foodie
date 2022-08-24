@@ -12,7 +12,7 @@ import LogIn from './pages/LogIn';
 import Head from './components/Head';
 import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
 import RestaurantDetails from './pages/RestaurantDetails';
-
+export const logInContext = React.createContext()
 export const mapDataContext = React.createContext()
 export const loginEmailContext = React.createContext()
 
@@ -21,6 +21,7 @@ function App() {
   const [mapData, setMapData] = useState([])
   const [email, setEmail] = useState("")
   const [business, setBusiness] = useState("")
+  const [isItLoggedIn, setIsItLoggedIn] = useState(false)
 
   const onClick = () => {
     if (isEdit) {
@@ -39,7 +40,12 @@ function App() {
     return { email, setEmail }
   }, [email])
 
+  const memoziedLogIn = useMemo(() => {
+    return { isItLoggedIn, setIsItLoggedIn }
+  }, [isItLoggedIn])
+
   return (
+    <logInContext.Provider value={memoziedLogIn}>
     <loginEmailContext.Provider value={memoziedEmail}>
       <mapDataContext.Provider value={memoziedMap}>
         <BrowserRouter>
@@ -77,6 +83,7 @@ function App() {
         </BrowserRouter>
       </mapDataContext.Provider>
     </loginEmailContext.Provider>
+    </logInContext.Provider>
   );
 }
 

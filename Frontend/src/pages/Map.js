@@ -6,12 +6,15 @@ import RestaurantInfo from '../components/RestaurantInfo';
 import { useNavigate } from 'react-router-dom';
 import { mapDataContext } from '../App';
 import axios from "axios"
+import { logInContext } from "../App";
+import LogIn from './LogIn';
 
 const containerStyle = {
     width: '1000px',
     height: '800px'
 };
 const Map = ({ business, setBusiness }) => {
+    const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
     const navigate = useNavigate()
     const { mapData } = useContext(mapDataContext)
     const [markers, setMarkers] = useState([])
@@ -21,6 +24,15 @@ const Map = ({ business, setBusiness }) => {
         googleMapsApiKey: 'AIzaSyAcaYDEWjjYRwiUJACWEOHC_HA32gaO7k0',
         libraries: ["places"],
     })
+
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.cookiedEmail) {
+                setIsItLoggedIn(true)
+            }
+        })()
+    }, [])
 
     const oneWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     useEffect(() => {
@@ -60,50 +72,52 @@ const Map = ({ business, setBusiness }) => {
     }
     if (!isLoaded) return <div>"Loading Maps"</div>;
     return (
-        <>
-            <Head name="Restaurants Nearby" /><div className='Map'>
-                <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={mapData.id ? { lat: mapData.coordinates.latitude, lng: mapData.coordinates.longitude } : center}
-                    zoom={15}
-                    onClick={onMapClick}
-                    onLoad={onMapLoad}
-                >
-                    {markers.map(marker =>
-                        <Marker
-                            key={marker.time.toISOString()}
-                            position={{ lat: marker.lat, lng: marker.lng }}
-                            icon={{
-                                url: '/icons/logo_burger.svg',
-                                scaledSize: new window.google.maps.Size(40, 40),
-                                origin: new window.google.maps.Point(0, 0),
-                                anchor: new window.google.maps.Point(15, 15),
-                            }}
-                            onClick={() => {
-                                setSelected(marker)
-                            }}
-                        />)}
-                    {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
-                        onCloseClick={() => { setSelected(null) }}>
-                        <div className='restaurant_info'>
-                            <h1 onClick={restaurantDetails}>{mapData.name}</h1>
-                            <h2>Address: {mapData.location.address1}</h2>
-                            <h2>{mapData.location.city} {mapData.location.state}, {mapData.location.zip_code}</h2>
-                            <h3>Phone: {mapData.display_phone}</h3>
-                            <ul>Open hours:
-                                {business ? (business.hours[0].open.map(hours => {
-                                    return (<li key={hours.day}>  {oneWeek[hours.day]}: {hours.start} ~ {hours.end} </li>)
-                                })) : null}
-                                <img className="restaurant_img" alt="restaurant_img" src={business ? business.image_url : "/icons/map.svg"} width="39" />
-                            </ul>
-                            <div className="restaurant_img_div">
+        <>{isItLoggedIn ?
+            <>
+                <Head name="Restaurants Nearby" /><div className='Map'>
+                    <GoogleMap
+                        mapContainerStyle={containerStyle}
+                        center={mapData.id ? { lat: mapData.coordinates.latitude, lng: mapData.coordinates.longitude } : center}
+                        zoom={15}
+                        onClick={onMapClick}
+                        onLoad={onMapLoad}
+                    >
+                        {markers.map(marker =>
+                            <Marker
+                                key={marker.time.toISOString()}
+                                position={{ lat: marker.lat, lng: marker.lng }}
+                                icon={{
+                                    url: '/icons/logo_burger.svg',
+                                    scaledSize: new window.google.maps.Size(40, 40),
+                                    origin: new window.google.maps.Point(0, 0),
+                                    anchor: new window.google.maps.Point(15, 15),
+                                }}
+                                onClick={() => {
+                                    setSelected(marker)
+                                }}
+                            />)}
+                        {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
+                            onCloseClick={() => { setSelected(null) }}>
+                            <div className='restaurant_info'>
+                                <h1 onClick={restaurantDetails}>{mapData.name}</h1>
+                                <h2>Address: {mapData.location.address1}</h2>
+                                <h2>{mapData.location.city} {mapData.location.state}, {mapData.location.zip_code}</h2>
+                                <h3>Phone: {mapData.display_phone}</h3>
+                                <ul>Open hours:
+                                    {business ? (business.hours[0].open.map(hours => {
+                                        return (<li key={hours.day}>  {oneWeek[hours.day]}: {hours.start} ~ {hours.end} </li>)
+                                    })) : null}
+                                    <img className="restaurant_img" alt="restaurant_img" src={business ? business.image_url : "/icons/map.svg"} width="39" />
+                                </ul>
+                                <div className="restaurant_img_div">
 
+                                </div>
                             </div>
-                        </div>
-                    </InfoWindow>) : null}
-                </GoogleMap>
-                <RestaurantInfo business={business} />
-            </div>
+                        </InfoWindow>) : null}
+                    </GoogleMap>
+                    <RestaurantInfo business={business} />
+                </div>
+            </> : <LogIn />}
         </>
     )
 

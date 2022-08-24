@@ -1,10 +1,13 @@
 import axios from "axios";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchRestaurant from '../components/SearchRestaurant'
 import Head from '../components/Head'
+import { logInContext } from "../App";
+import LogIn from "../pages/LogIn";
 const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
     const descriptionInput = useRef();
+    const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
     const fileRef = useRef(null);
     const [file, setFile] = useState();
     const [description, setDescription] = useState("");
@@ -17,6 +20,16 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
     useEffect(() => {
         setDescription(newPost.description)
         setResturantName(newPost.resName)
+    }, [])
+
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.cookiedEmail) {
+                setIsItLoggedIn(true)
+            }
+
+        })()
     }, [])
 
     const submit = async (event) => {
@@ -55,7 +68,7 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
         });
     };
 
-    return (
+    return (<>{isItLoggedIn ?
         <div>
             <Head name="Edit Post" />
             <div className="card">
@@ -89,7 +102,8 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
                     </form>
                 </div>
             </div>
-        </div >
+        </div >: <LogIn />}
+        </>
     )
 }
 export default Edit;

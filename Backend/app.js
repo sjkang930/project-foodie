@@ -12,6 +12,7 @@ import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import cookieSession from "cookie-session"
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const bucketRegion = process.env.AWS_BUCKET_REGION
@@ -31,12 +32,20 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 dotenv.config();
 app.use(express.json());
+app.use(
+    cors({
+        origin: "*",
+        credentials: true
+
+    })
+)
 app.use(cookieSession({
     name: 'whoami',
     httpOnly: "true",
     keys: ['key1', 'key2'],
     maxAge: 24 * 60 * 60 * 1000 //24hrs
 }))
+
 
 const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
@@ -131,6 +140,7 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
         latitude,
         longitude
     })
+    console.log(req.session.whoami)
 })
 
 app.post('/restaurant', async (req, res) => {
@@ -195,10 +205,16 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
+    const cookiedEmail = req.session.whoami
     const users = await getUsers()
     const thisUser = users.find(user => user.email === email)
     const verified = await bcrypt.compare(password, thisUser.password)
-    res.send({ verified, thisUser })
+    res.send({ verified, thisUser, cookiedEmail })
+})
+
+app.get('/auth', async (req, res) => {
+    const cookiedEmail = req.session.whoami
+    res.send({cookiedEmail})
 })
 
 app.use(function (err, req, res, next) {

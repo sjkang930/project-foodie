@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment, createUser, getUsers, getUser } from './database.js'
+import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment, createUser, getUsers, getUser, getUserByEmail } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
 import fs, { copyFileSync } from 'fs'
@@ -51,8 +51,17 @@ const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
+    const email = req.session.whoami
+    if (email) {
+        const user = getUserByEmail(email)
+        console.log(user)
+        const posts = await getPosts()
+        res.send(posts, user)
+        return
+    }
     const posts = await getPosts()
     res.send(posts)
+    return
 })
 
 app.get('/comments', async (req, res) => {
@@ -208,13 +217,17 @@ app.post('/login', async (req, res) => {
     const cookiedEmail = req.session.whoami
     const users = await getUsers()
     const thisUser = users.find(user => user.email === email)
-    const verified = await bcrypt.compare(password, thisUser.password)
-    res.send({ verified, thisUser, cookiedEmail })
+    if (thisUser) {
+        const verified = await bcrypt.compare(password, thisUser.password)
+        res.send({ verified, thisUser, cookiedEmail })
+        return
+    }
+    res.send()
 })
 
 app.get('/auth', async (req, res) => {
     const cookiedEmail = req.session.whoami
-    res.send({cookiedEmail})
+    res.send({ cookiedEmail })
 })
 
 app.use(function (err, req, res, next) {

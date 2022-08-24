@@ -33,6 +33,15 @@ export async function getUser(user_id) {
     )
     return rows[0]
 }
+export async function getUserByEmail(email) {
+    const [rows] = await pool.query(`
+    SELECT * 
+    FROM users 
+    WHERE email = ?
+    `, [email]
+    )
+    return rows[0]
+}
 
 export async function getPosts() {
     const [rows] = await pool.query(`SELECT * FROM posts ORDER BY post_id DESC;`)

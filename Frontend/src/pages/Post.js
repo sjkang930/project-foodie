@@ -18,6 +18,7 @@ const Post = ({ isEdit, setIsEdit }) => {
     useEffect(() => {
         (async () => {
             const result = await axios.get('/posts')
+            console.log(result.data)
             setPosts(result.data)
         })()
     }, [])

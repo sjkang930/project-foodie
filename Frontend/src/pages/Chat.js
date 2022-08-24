@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { logInContext } from '../App';
+import LogIn from './LogIn';
 const Chat = () => {
+    const { isItLoggedIn } = useContext(logInContext)
     return (
         <div className="Chat">
-            <p>Chat page</p>
-
+            {isItLoggedIn ?
+                <p>Chat page</p>
+                : <LogIn />}
         </div>
     )
 }

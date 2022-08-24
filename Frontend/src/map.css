@@ -27,6 +27,7 @@ div.restaurant_info > ul {
 
 div.restaurant_info > ul > img {
     width: 200px;
+    height: 150px;
     text-align: center;
     margin-left: 0;
 }

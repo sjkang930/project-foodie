@@ -57,8 +57,6 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
 
     return (
         <div>
-
-
             <Head name="Edit Post" />
             <div className="card">
                 <div className="preview_div">
@@ -66,7 +64,6 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
                 </div>
                 <div className="post_form">
                     <form onSubmit={submit}>
-
                         <>
                             <input className="file"
                                 ref={fileRef}
@@ -92,8 +89,6 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
                     </form>
                 </div>
             </div>
-
-
         </div >
     )
 }

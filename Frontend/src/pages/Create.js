@@ -59,7 +59,6 @@ const Create = () => {
                 </div>
                 <div className="post_form">
                     <form onSubmit={submit}>
-
                         <>
                             <input className="file"
                                 ref={fileRef}
@@ -85,8 +84,6 @@ const Create = () => {
                     </form>
                 </div>
             </div>
-
-
         </div >
     )
 }

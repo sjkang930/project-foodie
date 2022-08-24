@@ -12,6 +12,7 @@ import LogIn from './pages/LogIn';
 import Head from './components/Head';
 import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
 import RestaurantDetails from './pages/RestaurantDetails';
+import Authentication from './pages/Authentication';
 export const logInContext = React.createContext()
 export const mapDataContext = React.createContext()
 export const loginEmailContext = React.createContext()
@@ -46,43 +47,44 @@ function App() {
 
   return (
     <logInContext.Provider value={memoziedLogIn}>
-    <loginEmailContext.Provider value={memoziedEmail}>
-      <mapDataContext.Provider value={memoziedMap}>
-        <BrowserRouter>
-          <div className="App">
-            <div className="posts">
-              <Routes>
-                <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
-                <Route path="Map" element={<Map business={business} setBusiness={setBusiness} />} />
-                <Route path="Create" element={<Create />} />
-                <Route path="Chat" element={<Chat />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route path="login" element={<LogIn />} />
-                <Route path="restaurant" element={<RestaurantDetails business={business} />} />
-              </Routes>
+      <loginEmailContext.Provider value={memoziedEmail}>
+        <mapDataContext.Provider value={memoziedMap}>
+          <BrowserRouter>
+            <div className="App">
+              <div className="posts">
+                <Routes>
+                  <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
+                  <Route path="Map" element={<Map business={business} setBusiness={setBusiness} />} />
+                  <Route path="Create" element={<Create />} />
+                  <Route path="Chat" element={<Chat />} />
+                  <Route path="signup" element={<SignUp />} />
+                  <Route path="login" element={<LogIn />} />
+                  <Route path="restaurant" element={<RestaurantDetails business={business} />} />
+                  <Route path="authentication" element={<Authentication />} />
+                </Routes>
+              </div>
             </div>
-          </div>
 
-          <nav className="nav_icon">
-            <NavLink to="/">
-              <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
-            </NavLink>
-            <NavLink to="Map">
-              <img onClick={clearMapData} alt="icon" className="map_icon" src="icons/locationicon.svg" />
-            </NavLink>
-            <NavLink to="Create">
-              <img alt="icon" className="post_icon" src="icons/post-new.svg" />
-            </NavLink>
-            <NavLink to="Chat">
-              <img alt="icon" className="chat_icon" src="icons/txt.svg" />
-            </NavLink>
-            <NavLink to="signup">
-              <img alt="icon" className="profile_icon" src="icons/profile.svg" />
-            </NavLink>
-          </nav>
-        </BrowserRouter>
-      </mapDataContext.Provider>
-    </loginEmailContext.Provider>
+            <nav className="nav_icon">
+              <NavLink to="/">
+                <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
+              </NavLink>
+              <NavLink to="Map">
+                <img onClick={clearMapData} alt="icon" className="map_icon" src="icons/locationicon.svg" />
+              </NavLink>
+              <NavLink to="Create">
+                <img alt="icon" className="post_icon" src="icons/post-new.svg" />
+              </NavLink>
+              <NavLink to="Chat">
+                <img alt="icon" className="chat_icon" src="icons/txt.svg" />
+              </NavLink>
+              <NavLink to="signup">
+                <img alt="icon" className="profile_icon" src="icons/profile.svg" />
+              </NavLink>
+            </nav>
+          </BrowserRouter>
+        </mapDataContext.Provider>
+      </loginEmailContext.Provider>
     </logInContext.Provider>
   );
 }

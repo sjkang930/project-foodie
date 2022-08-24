@@ -11,6 +11,7 @@ import Post from './pages/Post';
 import LogIn from './pages/LogIn';
 import Head from './components/Head';
 import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
+import RestaurantDetails from './pages/RestaurantDetails';
 
 export const mapDataContext = React.createContext()
 
@@ -44,6 +45,7 @@ function App() {
               <Route path="Chat" element={<Chat />} />
               <Route path="signup" element={<SignUp />} />
               <Route path="login" element={<LogIn />} />
+              <Route path="restaurant" element={<RestaurantDetails />} />
             </Routes>
           </div>
         </div>

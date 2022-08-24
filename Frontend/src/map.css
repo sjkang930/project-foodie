@@ -5,20 +5,26 @@ div.restaurant_info{
     overflow: scroll;
 }
 div.restaurant_info > h1 {
+    text-decoration: underline;
+    cursor: pointer;
     color: #00bfb2;
 }
 div.restaurant_info > h3 {
-    color: #00bfb2;
+    color: #1a5e63;
     font-size: 16px;
 }
 div.restaurant_info > ul {
     display: flex;
     flex-direction: column;
     margin-left: 0;
-    text-align: center;
+    align-items: center;
     font-size: 15px;
-    border: 1px solid #00bfb2;
+    border: 1px solid #1a5e63;
 }
+div.restaurant_info > ul {
+    padding-left: 0;
+}
+
 div.restaurant_info > ul > img {
     width: 200px;
     text-align: center;

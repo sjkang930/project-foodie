@@ -3,6 +3,7 @@ import { GoogleMap, Marker, useJsApiLoader, InfoWindow, useLoadScript } from '@r
 import GoogleMapReact from 'google-map-react';
 import Head from '../components/Head';
 import RestaurantInfo from '../components/RestaurantInfo';
+import { useNavigate } from 'react-router-dom';
 import { mapDataContext } from '../App';
 import axios from "axios"
 
@@ -12,6 +13,7 @@ const containerStyle = {
     height: '800px'
 };
 const Map = () => {
+    const navigate = useNavigate()
     const { mapData } = useContext(mapDataContext)
     const [markers, setMarkers] = useState([])
     const [center, setCenter] = useState({ lat: 49.2835, lng: -123.1153 })
@@ -49,6 +51,11 @@ const Map = () => {
         }
     }
 
+    const restaurantDetails = () => {
+        navigate('/restaurant', { replace: true });
+    }
+
+
     if (loadError) {
         return "Error loading maps";
     }
@@ -80,7 +87,7 @@ const Map = () => {
                     {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
                         onCloseClick={() => { setSelected(null) }}>
                         <div className='restaurant_info'>
-                            <h1>{mapData.name}</h1>
+                            <h1 onClick={restaurantDetails}>{mapData.name}</h1>
                             <h2>Address: {mapData.location.address1}</h2>
                             <h2>{mapData.location.city} {mapData.location.state}, {mapData.location.zip_code}</h2>
                             <h3>Phone: {mapData.display_phone}</h3>

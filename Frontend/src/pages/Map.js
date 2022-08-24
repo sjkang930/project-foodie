@@ -11,7 +11,7 @@ const containerStyle = {
     width: '1000px',
     height: '800px'
 };
-const Map = () => {
+const Map = ({ business, setBusiness }) => {
     const navigate = useNavigate()
     const { mapData } = useContext(mapDataContext)
     const [markers, setMarkers] = useState([])
@@ -21,7 +21,7 @@ const Map = () => {
         googleMapsApiKey: 'AIzaSyAcaYDEWjjYRwiUJACWEOHC_HA32gaO7k0',
         libraries: ["places"],
     })
-    const [business, setBusiness] = useState("")
+
     const oneWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     useEffect(() => {
         (async () => {

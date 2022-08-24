@@ -20,6 +20,8 @@ function App() {
   const [isEdit, setIsEdit] = useState(false);
   const [mapData, setMapData] = useState([])
   const [email, setEmail] = useState("")
+  const [business, setBusiness] = useState("")
+
   const onClick = () => {
     if (isEdit) {
       setIsEdit(!isEdit)

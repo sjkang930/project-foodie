@@ -28,13 +28,14 @@ const Post = ({ isEdit, setIsEdit }) => {
     }
 
     return (
-        <><div className="head_logo">
+        <>
+        {!(isEdit) ?<div className="head_logo">
             <header>
                 <h2>
                     <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
                 </h2>
             </header>
-        </div>
+        </div>: null}
             <div div className="posts">
                 {isEdit ? <Edit newPost={newPost} posts={posts} setPosts={setPosts} isEdit={isEdit} setIsEdit={setIsEdit} /> :
                     posts.map(post => (

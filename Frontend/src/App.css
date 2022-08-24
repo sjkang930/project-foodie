@@ -17,10 +17,15 @@ body {
   /* width: 100%; */
 }
 
+section.picture div {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
 .post .user_pic {
   float: none;
   width: 100vh;
-  margin-left: auto;
   max-width: 340px;
   max-height: 400px;
 }
@@ -229,6 +234,8 @@ li.comment_list {
   outline: none;
   /* background-color: pink; */
 }
+
+
 .restaurant_ul {
   padding-left: 0px;
 }

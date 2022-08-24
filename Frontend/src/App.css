@@ -198,7 +198,7 @@ li.comment_list {
 .file {
   display: flex;
   justify-content: space-around;
-  background-color: teal;
+  /* background-color: teal; */
   border: none;
   outline: none;
 }
@@ -206,7 +206,7 @@ li.comment_list {
 .description {
   display: flex;
   justify-content: space-between;
-  background-color: pink;
+  /* background-color: pink; */
   border: none;
   outline: none;
   color: teal;
@@ -227,7 +227,7 @@ li.comment_list {
   left: 0;
   border: none;
   outline: none;
-  background-color: pink;
+  /* background-color: pink; */
 }
 .restaurant_ul {
   padding-left: 0px;

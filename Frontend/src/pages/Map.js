@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { mapDataContext } from '../App';
 import axios from "axios"
 
-
 const containerStyle = {
     width: '1000px',
     height: '800px'

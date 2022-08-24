@@ -19,6 +19,7 @@
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
     "cucumber": "^6.0.7",
     "dotenv": "^16.0.1",
     "express": "^5.0.0-beta.1",

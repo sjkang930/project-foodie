@@ -1,13 +1,16 @@
 import axios from "axios";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchRestaurant from '../components/SearchRestaurant'
 import Head from '../components/Head'
 // import './create.css'; 
 import Image from "../components/Image";
+import { logInContext } from "../App";
+import LogIn from "./LogIn";
 
 const Create = () => {
     const descriptionInput = useRef();
+    const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
     const fileRef = useRef(null);
     const [file, setFile] = useState();
     const [description, setDescription] = useState("");
@@ -15,6 +18,15 @@ const Create = () => {
     const [place, setPlace] = useState("49.2827,-123.1207")
     const navigate = useNavigate();
     const [imageSrc, setImageSrc] = useState('');
+
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.cookiedEmail) {
+                setIsItLoggedIn(true)
+            }
+        })()
+    }, [])
 
     const submit = async event => {
         event.preventDefault()
@@ -51,6 +63,7 @@ const Create = () => {
     };
 
     return (
+        <>{isItLoggedIn?
         <div>
             <Head name="Preivew Post" />
             <div className="card">
@@ -85,6 +98,8 @@ const Create = () => {
                 </div>
             </div>
         </div >
+        : <LogIn />}
+        </>
     )
 }
 export default Create;

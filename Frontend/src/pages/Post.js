@@ -29,13 +29,14 @@ const Post = ({ isEdit, setIsEdit }) => {
 
     return (
         <>
-        {!(isEdit) ?<div className="head_logo">
-            <header>
-                <h2>
-                    <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
-                </h2>
-            </header>
-        </div>: null}
+            {!(isEdit) ?
+                <div className="head_logo">
+                    <header>
+                        <h2>
+                            <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
+                        </h2>
+                    </header>
+                </div> : null}
             <div div className="posts">
                 {isEdit ? <Edit newPost={newPost} posts={posts} setPosts={setPosts} isEdit={isEdit} setIsEdit={setIsEdit} /> :
                     posts.map(post => (
@@ -48,7 +49,6 @@ const Post = ({ isEdit, setIsEdit }) => {
                                     <span className="name_location">
                                         <div className="user_name">
                                             suji kang
-
                                         </div>
                                         <div className="location">
                                             {post.resName}
@@ -93,7 +93,8 @@ const Post = ({ isEdit, setIsEdit }) => {
                             <Comment post_id={post.post_id} />
                         </div>
                     ))}
-            </div></>
+            </div>
+        </>
     );
 }
 

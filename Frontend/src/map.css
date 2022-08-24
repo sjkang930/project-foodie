@@ -47,3 +47,6 @@ div.RestaurantInfo > button {
     font-size: 16px;
     cursor: pointer;
 }
+img.map_icon{
+    cursor: pointer;
+}

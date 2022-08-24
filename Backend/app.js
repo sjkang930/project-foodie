@@ -160,6 +160,7 @@ app.post("/hours/:id", async (req, res) => {
         }
         const data = await axios.get(url_api, request)
         const restaurant = data.data
+        console.log("restaurant", restaurant)
         res.send(restaurant)
     }
 })

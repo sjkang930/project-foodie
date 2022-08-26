@@ -25,14 +25,14 @@ const Map = ({ business, setBusiness }) => {
         libraries: ["places"],
     })
 
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get('/auth')
-            if (result.data.cookiedEmail) {
-                setIsItLoggedIn(true)
-            }
-        })()
-    }, [])
+    // useEffect(() => {
+    //     (async () => {
+    //         const result = await axios.get('/auth')
+    //         if (result.data.cookiedEmail) {
+    //             setIsItLoggedIn(true)
+    //         }
+    //     })()
+    // }, [])
 
     const oneWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     useEffect(() => {

@@ -19,14 +19,14 @@ const Create = () => {
     const navigate = useNavigate();
     const [imageSrc, setImageSrc] = useState('');
 
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get('/auth')
-            if (result.data.cookiedEmail) {
-                setIsItLoggedIn(true)
-            }
-        })()
-    }, [])
+    // useEffect(() => {
+    //     (async () => {
+    //         const result = await axios.get('/auth')
+    //         if (result.data.cookiedEmail) {
+    //             setIsItLoggedIn(true)
+    //         }
+    //     })()
+    // }, [])
 
     const submit = async event => {
         event.preventDefault()
@@ -63,42 +63,42 @@ const Create = () => {
     };
 
     return (
-        <>{isItLoggedIn?
-        <div>
-            <Head name="Preivew Post" />
-            <div className="card">
-                <div className="preview_div">
-                    {imageSrc ? <img className='preview' src={imageSrc} alt="preview-img" /> : <div className="inner_div">Preview Image</div>}
+        <>{isItLoggedIn ?
+            <div>
+                <Head name="Preivew Post" />
+                <div className="card">
+                    <div className="preview_div">
+                        {imageSrc ? <img className='preview' src={imageSrc} alt="preview-img" /> : <div className="inner_div">Preview Image</div>}
+                    </div>
+                    <div className="post_form">
+                        <form onSubmit={submit}>
+                            <>
+                                <input className="file"
+                                    ref={fileRef}
+                                    filename={file}
+                                    onChange={(e) => {
+                                        encodeFileToBase64(e.target.files[0]);
+                                        setFile(e.target.files[0])
+                                    }}
+                                    type="file"
+                                    accept="image/*">
+                                </input>
+                            </>
+                            <>
+                                <input className="description"
+                                    ref={descriptionInput}
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    type="text"
+                                    placeholder="Write a Caption..."></input>
+                            </>
+                            <SearchRestaurant place={place} setPlace={setPlace} restaurantName={restaurantName} setResturantName={setResturantName} />
+                            <button type="submit">Post</button>
+                        </form>
+                    </div>
                 </div>
-                <div className="post_form">
-                    <form onSubmit={submit}>
-                        <>
-                            <input className="file"
-                                ref={fileRef}
-                                filename={file}
-                                onChange={(e) => {
-                                    encodeFileToBase64(e.target.files[0]);
-                                    setFile(e.target.files[0])
-                                }}
-                                type="file"
-                                accept="image/*">
-                            </input>
-                        </>
-                        <>
-                            <input className="description"
-                                ref={descriptionInput}
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                type="text"
-                                placeholder="Write a Caption..."></input>
-                        </>
-                        <SearchRestaurant place={place} setPlace={setPlace} restaurantName={restaurantName} setResturantName={setResturantName} />
-                        <button type="submit">Post</button>
-                    </form>
-                </div>
-            </div>
-        </div >
-        : <LogIn />}
+            </div >
+            : <LogIn />}
         </>
     )
 }

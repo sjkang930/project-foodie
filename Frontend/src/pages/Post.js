@@ -17,19 +17,9 @@ const Post = ({ isEdit, setIsEdit }) => {
 
     useEffect(() => {
         (async () => {
-            const result = await axios.get('/posts')
+            const result = await axios.get('/posts', { withCredentials: true })
             console.log(result.data)
             setPosts(result.data)
-        })()
-    }, [])
-
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get('/auth')
-            if (result.data.cookiedEmail) {
-                setIsItLoggedIn(true)
-            }
-
         })()
     }, [])
 

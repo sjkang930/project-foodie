@@ -22,15 +22,15 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
         setResturantName(newPost.resName)
     }, [])
 
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get('/auth')
-            if (result.data.cookiedEmail) {
-                setIsItLoggedIn(true)
-            }
+    // useEffect(() => {
+    //     (async () => {
+    //         const result = await axios.get('/auth')
+    //         if (result.data.cookiedEmail) {
+    //             setIsItLoggedIn(true)
+    //         }
 
-        })()
-    }, [])
+    //     })()
+    // }, [])
 
     const submit = async (event) => {
         event.preventDefault()
@@ -102,8 +102,8 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
                     </form>
                 </div>
             </div>
-        </div >: <LogIn />}
-        </>
+        </div > : <LogIn />}
+    </>
     )
 }
 export default Edit;

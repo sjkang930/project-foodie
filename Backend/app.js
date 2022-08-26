@@ -11,8 +11,8 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import cookieSession from "cookie-session"
-import cookieParser from 'cookie-parser'
-import cors from 'cors'
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const bucketRegion = process.env.AWS_BUCKET_REGION
@@ -32,20 +32,20 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 dotenv.config();
 app.use(express.json());
+
 app.use(
     cors({
         origin: "*",
         credentials: true
-
     })
 )
+app.use(cookieParser());
 app.use(cookieSession({
     name: 'whoami',
     httpOnly: "true",
     keys: ['key1', 'key2'],
     maxAge: 24 * 60 * 60 * 1000 //24hrs
 }))
-
 
 const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
@@ -214,7 +214,15 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
+    res.cookie('name', `${email}`, {
+        path: '/',
+        expires: new Date(new Date().getTime() + 100 * 1000),
+        keys: ['key1', 'key2'],
+        httpOnly: true,
+    })
     const cookiedEmail = req.session.whoami
+    console.log("cookiedEmail", req.session)
+    console.log(req.cookies)
     const users = await getUsers()
     const thisUser = users.find(user => user.email === email)
     if (thisUser) {
@@ -227,6 +235,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/auth', async (req, res) => {
     const cookiedEmail = req.session.whoami
+    console.log(cookiedEmail)
     res.send({ cookiedEmail })
 })
 

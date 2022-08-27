@@ -1,8 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { logInContext } from '../App';
+import axios from 'axios'
 import LogIn from './LogIn';
 const Chat = () => {
-    const { isItLoggedIn } = useContext(logInContext)
+    const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
+
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.email) {
+                setIsItLoggedIn(true)
+            }
+        })()
+    }, [])
     return (
         <div className="Chat">
             {isItLoggedIn ?

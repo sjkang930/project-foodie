@@ -23,6 +23,16 @@ const Post = ({ isEdit, setIsEdit }) => {
         })()
     }, [])
 
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.email) {
+                setIsItLoggedIn(true)
+            }
+        })()
+    }, [])
+
+
     const deleteBtn = async (post_id) => {
         if (window.confirm("Are you sure you want to delete it?")) {
             setPosts(posts.filter(post => post.post_id !== post_id))

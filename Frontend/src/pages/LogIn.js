@@ -12,15 +12,15 @@ const LogIn = () => {
     const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const result = await axios.get('/auth')
-    //         if (result.data.cookiedEmail) {
-    //             setIsItLoggedIn(true)
-    //         }
-    //     })()
-    // }, [])
 
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.email) {
+                setIsItLoggedIn(true)
+            }
+        })()
+    }, [])
     const logInBtn = async event => {
         event.preventDefault()
         if (email.length < 1) {

@@ -214,19 +214,12 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
-    res.cookie('name', `${email}`, {
-        path: '/',
-        expires: new Date(new Date().getTime() + 100 * 1000),
-        keys: ['key1', 'key2'],
-        httpOnly: true,
-    })
-    const cookiedEmail = req.session.whoami
-    console.log("cookiedEmail", req.session)
-    console.log(req.cookies)
+
     const users = await getUsers()
     const thisUser = users.find(user => user.email === email)
     if (thisUser) {
         const verified = await bcrypt.compare(password, thisUser.password)
+        req.session.whoami = email
         res.send({ verified, thisUser, cookiedEmail })
         return
     }
@@ -234,9 +227,16 @@ app.post('/login', async (req, res) => {
 })
 
 app.get('/auth', async (req, res) => {
-    const cookiedEmail = req.session.whoami
-    console.log(cookiedEmail)
-    res.send({ cookiedEmail })
+    const email = req.session.whoami
+    console.log(email)
+    res.send({ email })
+})
+
+app.get('/userInfo', async (req, res) => {
+    const email = req.session.whoami
+    const user = await getUserByEmail(email)
+    console.log(user)
+    res.send({ user })
 })
 
 app.use(function (err, req, res, next) {

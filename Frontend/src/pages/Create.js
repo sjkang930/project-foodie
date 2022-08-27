@@ -19,15 +19,15 @@ const Create = () => {
     const navigate = useNavigate();
     const [imageSrc, setImageSrc] = useState('');
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const result = await axios.get('/auth')
-    //         if (result.data.cookiedEmail) {
-    //             setIsItLoggedIn(true)
-    //         }
-    //     })()
-    // }, [])
 
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get('/auth')
+            if (result.data.email) {
+                setIsItLoggedIn(true)
+            }
+        })()
+    }, [])
     const submit = async event => {
         event.preventDefault()
         if (description.length < 1) {

@@ -40,74 +40,76 @@ const Post = ({ isEdit, setIsEdit }) => {
         <>{isItLoggedIn ?
             <>
                 {!(isEdit) ?
-                    <div className="head_logo">
-                        <header>
-                            <h2>
-                                <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
-                            </h2>
-                        </header>
-                    </div> : null}
-                <div div className="posts">
-                    {isEdit ? <Edit newPost={newPost} posts={posts} setPosts={setPosts} isEdit={isEdit} setIsEdit={setIsEdit} /> :
-                        posts.map(post => (
-                            <div className="post" key={post.post_id}>
-                                <section className="post_head">
-                                    <div className="left_col">
+                    <>
+                        <div className="head_logo">
+                            <header>
+                                <h2>
+                                    <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
+                                </h2>
+                            </header>
+                        </div><div div className="posts">
+
+                            {posts.map(post => (
+                                <div className="post" key={post.post_id}>
+                                    <section className="post_head">
+                                        <div className="left_col">
+                                            <div>
+                                                <img className="profile" alt="profile" src="/icons/smantha.svg" />
+                                            </div>
+                                            <span className="name_location">
+                                                <div className="user_name">
+                                                    {email.firstname} {email.lastname}
+                                                </div>
+                                                <div className="location">
+                                                    {post.resName}
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <MoreButtons post_id={post.post_id} user_id={post.user_id} deleteBtn={deleteBtn} editBtn={() => {
+                                            if (post.user_id !== email.user_id) {
+                                                window.confirm("You can not access!");
+                                                return;
+                                            }
+                                            setIsEdit(!isEdit);
+                                            const editPost = posts.find(it => it.post_id === post.post_id);
+                                            setNewPost(editPost);
+                                        }} />
+                                    </section>
+                                    <section className="picture">
                                         <div>
-                                            <img className="profile" alt="profile" src="/icons/smantha.svg" />
+                                            <img alt="userPic" className="user_pic" src={post.filename} />
                                         </div>
-                                        <span className="name_location">
-                                            <div className="user_name">
-                                                {email.firstname} {email.lastname}
+                                    </section>
+                                    <section>
+                                        <div className="second_icon">
+                                            <div className="left_icons">
+                                                <div className="likes">
+                                                    <img alt="likes" onClick={() => setIsLike(!isLike)} src={isLike ? "/icons/like.svg" : "/icons/heart.svg"} />
+                                                </div>
+                                                <div className="message">
+                                                    <img alt="message" src="/icons/message.svg" />
+                                                </div>
+                                                <div className="share">
+                                                    <img alt="share" src="/icons/share.svg" />
+                                                </div>
                                             </div>
-                                            <div className="location">
-                                                {post.resName}
-                                            </div>
-                                        </span>
-                                    </div>
-                                    <MoreButtons post_id={post.post_id} user_id={post.user_id} deleteBtn={deleteBtn} editBtn={() => {
-                                        if (post.user_id !== email.user_id) {
-                                            window.confirm("You can not access!")
-                                            return
-                                        }
-                                        setIsEdit(!isEdit);
-                                        const editPost = posts.find(it => it.post_id === post.post_id);
-                                        setNewPost(editPost);
-                                    }} />
-                                </section>
-                                <section className="picture">
-                                    <div>
-                                        <img alt="userPic" className="user_pic" src={post.filename} />
-                                    </div>
-                                </section>
-                                <section>
-                                    <div className="second_icon">
-                                        <div className="left_icons">
-                                            <div className="likes">
-                                                <img alt="likes" onClick={() => setIsLike(!isLike)} src={isLike ? "/icons/like.svg" : "/icons/heart.svg"} />
-                                            </div>
-                                            <div className="message">
-                                                <img alt="message" src="/icons/message.svg" />
-                                            </div>
-                                            <div className="share">
-                                                <img alt="share" src="/icons/share.svg" />
-                                            </div>
+                                            <MapIcon post_id={post.post_id} setMapData={setMapData} posts={posts} />
                                         </div>
-                                        <MapIcon post_id={post.post_id} setMapData={setMapData} posts={posts} />
-                                    </div>
-                                </section>
-                                <section className="user_name_description">
-                                    <div className="user_name">
-                                        {email.firstname} {email.lastname}
-                                    </div>
-                                    <div className="description">
-                                        {post.description}
-                                    </div>
-                                </section>
-                                <Comment post_id={post.post_id} />
-                            </div>
-                        ))}
-                </div>
+                                    </section>
+                                    <section className="user_name_description">
+                                        <div className="user_name">
+                                            {email.firstname} {email.lastname}
+                                        </div>
+                                        <div className="description">
+                                            {post.description}
+                                        </div>
+                                    </section>
+                                    <Comment post_id={post.post_id} />
+                                </div>
+                            ))}
+                        </div>
+                    </> :
+                    <Edit newPost={newPost} posts={posts} setPosts={setPosts} isEdit={isEdit} setIsEdit={setIsEdit} />}
             </>
             : <LogIn />}
         </>

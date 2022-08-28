@@ -4,9 +4,9 @@ import Head from "../components/Head";
 const RestaurantDetails = ({ business }) => {
     const rating = business.rating
     function showStar() {
-        let star = <img alt="star" class="nav-icon" src="/icons/white_star_fill.svg" />
-        let half = <img alt="star" class="nav-icon" src="/icons/white_half_star.svg" />
-        let empty = <img alt="star" class="nav-icon" src="/icons/white_star_no_fill.svg" />
+        let star = <img alt="star" className="nav-icon" src="/icons/white_star_fill.svg" />
+        let half = <img alt="star" className="nav-icon" src="/icons/white_half_star.svg" />
+        let empty = <img alt="star" className="nav-icon" src="/icons/white_star_no_fill.svg" />
         if (rating == 0) {
             return <div>empty + empty + empty + empty + empty</div>
         } else if (rating == 1) {

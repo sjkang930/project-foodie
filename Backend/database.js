@@ -80,10 +80,10 @@ export async function deletePost(post_id) {
     return result;
 }
 
-export async function createComment(comment, post_id) {
+export async function createComment(comment, post_id, user_id) {
     const [result] = await pool.query(`
-    INSERT INTO comments(comment, post_id) VALUES(?, ?)
-        `, [comment, post_id])
+    INSERT INTO comments(comment, post_id, user_id) VALUES(?, ?, ?)
+        `, [comment, post_id, user_id])
     return result
 }
 

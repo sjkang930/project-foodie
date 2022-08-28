@@ -77,9 +77,12 @@ app.delete('/comments/:id', async (req, res) => {
 })
 
 app.post('/posts', async (req, res) => {
-    const { comment, postId } = req.body
-    const post = await createComment(comment, postId)
-    res.send(post)
+    if (req.session.whoami) {
+        const user_id = req.session.whoami.user_id
+        const { comment, postId } = req.body
+        const post = await createComment(comment, postId, user_id)
+        res.send(post)
+    }
 })
 
 app.get('/images/:filename', (req, res) => {
@@ -89,37 +92,38 @@ app.get('/images/:filename', (req, res) => {
 })
 
 app.post('/create', upload.single('image'), async (req, res) => {
-    console.log(req.session.whoami)
-    const { filename } = req.file
-    const { description, resName, place } = req.body
-    const image_url = `/images/${filename}`
-    const user_id = req.session.whoami.user_id
-    // const result = await uploadFile(req.file)
-    // console.log("result", result)
-    const latitude = place.substring(0, place.indexOf(','))
-    const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
-    const post = await createPost(user_id, description, image_url, resName, latitude, longitude)
-    const params = {
-        Buket: bucketName,
-        Key: req.file.originalname,
-        body: req.file.filename,
-        ContentType: req.file.mimetype,
+    if (req.session.whoami) {
+        const { filename } = req.file
+        const { description, resName, place } = req.body
+        const image_url = `/images/${filename}`
+        const user_id = req.session.whoami.user_id
+        // const result = await uploadFile(req.file)
+        // console.log("result", result)
+        const latitude = place.substring(0, place.indexOf(','))
+        const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
+        const post = await createPost(user_id, description, image_url, resName, latitude, longitude)
+        const params = {
+            Buket: bucketName,
+            Key: req.file.originalname,
+            body: req.file.filename,
+            ContentType: req.file.mimetype,
+        }
+
+        const command = new PutObjectCommand(params)
+        console.log("s3", s3.middlewareStack)
+        const middlewareStack = s3.middlewareStack
+        const response = middlewareStack.add(command)
+        console.log("response", response)
+
+        res.send({
+            user_id,
+            description,
+            image_url,
+            resName,
+            latitude,
+            longitude
+        })
     }
-
-    const command = new PutObjectCommand(params)
-    console.log("s3", s3.middlewareStack)
-    const middlewareStack = s3.middlewareStack
-    const response = middlewareStack.add(command)
-    console.log("response", response)
-
-    res.send({
-        user_id,
-        description,
-        image_url,
-        resName,
-        latitude,
-        longitude
-    })
 })
 
 app.delete('/delete/:post_id', async (req, res) => {

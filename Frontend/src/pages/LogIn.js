@@ -15,7 +15,7 @@ const LogIn = () => {
 
     useEffect(() => {
         (async () => {
-            const result = await axios.get('/auth')
+            const result = await axios.get('/userInfo')
             if (result.data.email) {
                 setIsItLoggedIn(true)
             }
@@ -53,7 +53,7 @@ const LogIn = () => {
                 <div className="head_logo">
                     <h2>
                         <a href="/"><img src='/icons/wordmark.svg' alt="logo" border='0' /></a>
-                        <img class="logo_burger" src="/icons/logo_burger.svg"></img>
+                        <img alt="logo" className="logo_burger" src="/icons/logo_burger.svg"></img>
                     </h2>
                 </div>
                 <div className="loginform">

@@ -3,8 +3,6 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchRestaurant from '../components/SearchRestaurant'
 import Head from '../components/Head'
-// import './create.css'; 
-import Image from "../components/Image";
 import { logInContext } from "../App";
 import LogIn from "./LogIn";
 
@@ -22,7 +20,7 @@ const Create = () => {
 
     useEffect(() => {
         (async () => {
-            const result = await axios.get('/auth')
+            const result = await axios.get('/userInfo')
             if (result.data.email) {
                 setIsItLoggedIn(true)
             }

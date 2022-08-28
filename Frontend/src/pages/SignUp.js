@@ -69,7 +69,7 @@ const SignUp = () => {
                 <div className="head_logo">
                     <h2>
                         <a href="/"><img src='/icons/wordmark.svg' alt="logo" border='0' /></a>
-                        <img class="logo_burger" src="/icons/logo_burger.svg"></img>
+                        <img alt="logo" class="logo_burger" src="/icons/logo_burger.svg"></img>
                     </h2>
                 </div>
                 <div className="signUpForm">

@@ -4,7 +4,6 @@ import axios from 'axios'
 
 const Authentication = () => {
     const { isItLoggedIn } = useContext(logInContext);
-    const { email } = useContext(loginEmailContext)
     const [user, setUser] = useState("")
     console.log(isItLoggedIn)
 

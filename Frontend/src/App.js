@@ -1,4 +1,4 @@
-import React, { useState, createContext, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import './App.css';
 import './signUp.css';
 import './map.css'
@@ -9,8 +9,6 @@ import Map from './pages/Map';
 import Create from './pages/Create';
 import Post from './pages/Post';
 import LogIn from './pages/LogIn';
-import Head from './components/Head';
-import { GoogleMap, withScriptjs, withGoogleMap } from "@react-google-maps/api";
 import RestaurantDetails from './pages/RestaurantDetails';
 import Authentication from './pages/Authentication';
 export const logInContext = React.createContext()

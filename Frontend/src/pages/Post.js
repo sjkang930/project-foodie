@@ -5,35 +5,31 @@ import MoreButtons from "../components/MoreButtons";
 import Edit from "../components/Edit";
 import MapIcon from "../components/MapIcon";
 import Head from "../components/Head";
-import { mapDataContext, logInContext } from "../App";
+import { mapDataContext, logInContext, loginEmailContext } from "../App";
 import LogIn from "./LogIn";
 
 const Post = ({ isEdit, setIsEdit }) => {
     const { setMapData } = useContext(mapDataContext)
     const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
+    const { email, setEmail } = useContext(loginEmailContext)
     const [isLike, setIsLike] = useState(false);
     const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState("")
 
     useEffect(() => {
         (async () => {
-            const result = await axios.get('/posts', { withCredentials: true })
-            console.log(result.data)
-            setPosts(result.data)
+            const result = await axios.get('/posts')
+            setPosts(result.data.posts)
+            setEmail(result.data.user)
+            setIsItLoggedIn(true)
         })()
     }, [])
 
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get('/auth')
-            if (result.data.email) {
-                setIsItLoggedIn(true)
-            }
-        })()
-    }, [])
-
-
-    const deleteBtn = async (post_id) => {
+    const deleteBtn = async (post_id, user_id) => {
+        if (user_id !== email.user_id) {
+            window.confirm("You can not access!")
+            return
+        }
         if (window.confirm("Are you sure you want to delete it?")) {
             setPosts(posts.filter(post => post.post_id !== post_id))
             await axios.delete(`/delete/${post_id}`)
@@ -62,14 +58,18 @@ const Post = ({ isEdit, setIsEdit }) => {
                                         </div>
                                         <span className="name_location">
                                             <div className="user_name">
-                                                suji kang
+                                                {email.firstname} {email.lastname}
                                             </div>
                                             <div className="location">
                                                 {post.resName}
                                             </div>
                                         </span>
                                     </div>
-                                    <MoreButtons post_id={post.post_id} deleteBtn={deleteBtn} editBtn={() => {
+                                    <MoreButtons post_id={post.post_id} user_id={post.user_id} deleteBtn={deleteBtn} editBtn={() => {
+                                        if (post.user_id !== email.user_id) {
+                                            window.confirm("You can not access!")
+                                            return
+                                        }
                                         setIsEdit(!isEdit);
                                         const editPost = posts.find(it => it.post_id === post.post_id);
                                         setNewPost(editPost);
@@ -98,7 +98,7 @@ const Post = ({ isEdit, setIsEdit }) => {
                                 </section>
                                 <section className="user_name_description">
                                     <div className="user_name">
-                                        suji kang
+                                        {email.firstname} {email.lastname}
                                     </div>
                                     <div className="description">
                                         {post.description}

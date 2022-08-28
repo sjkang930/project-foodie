@@ -35,11 +35,9 @@ const LogIn = () => {
         data.append("email", email)
         data.append("password", password)
         const result = await axios.post('/login', { email, password })
-        console.log(result)
         if (result.data.verified) {
-
             setIsItLoggedIn(true)
-            // setEmail(result.data)
+            setEmail(result.data.thisUser)
             navigate('/', { replace: true });
             return
         }

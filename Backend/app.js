@@ -51,7 +51,6 @@ const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
-
     if (req.session.whoami) {
         const email = req.session.whoami.email
         const user = await getUserByEmail(email)
@@ -217,22 +216,25 @@ app.post('/signup', async (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
     const users = await getUsers()
+    const posts = await getPosts()
     const thisUser = users.find(user => user.email === email)
     if (thisUser) {
         const verified = await bcrypt.compare(password, thisUser.password)
         const user_id = thisUser.user_id
         req.session.whoami = thisUser
-        res.send({ verified, thisUser })
+        res.send({ verified, thisUser, posts })
         return
     }
     res.send()
 })
 
 app.get('/userInfo', async (req, res) => {
-    const email = req.session.whoami.email
-    const user = await getUserByEmail(email)
-    console.log(user)
-    res.send({ user })
+    if (req.session.whoami) {
+        const email = req.session.whoami.email
+        const user = await getUserByEmail(email)
+        console.log(user)
+        res.send({ user })
+    }
 })
 
 app.use(function (err, req, res, next) {

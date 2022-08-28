@@ -14,6 +14,7 @@ import Authentication from './pages/Authentication';
 export const logInContext = React.createContext()
 export const mapDataContext = React.createContext()
 export const loginEmailContext = React.createContext()
+export const postContext = React.createContext()
 
 function App() {
   const [isEdit, setIsEdit] = useState(false);
@@ -21,6 +22,7 @@ function App() {
   const [email, setEmail] = useState("")
   const [business, setBusiness] = useState("")
   const [isItLoggedIn, setIsItLoggedIn] = useState(false)
+  const [posts, setPosts] = useState([]);
 
   const onClick = () => {
     if (isEdit) {
@@ -31,6 +33,10 @@ function App() {
   const clearMapData = () => {
     setMapData([])
   }
+
+  const memoziedPost = useMemo(() => {
+    return { posts, setPosts }
+  }, [posts])
   const memoziedMap = useMemo(() => {
     return { mapData, setMapData }
   }, [mapData])
@@ -47,40 +53,43 @@ function App() {
     <logInContext.Provider value={memoziedLogIn}>
       <loginEmailContext.Provider value={memoziedEmail}>
         <mapDataContext.Provider value={memoziedMap}>
-          <BrowserRouter>
-            <div className="App">
-              <div className="posts">
-                <Routes>
-                  <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
-                  <Route path="Map" element={<Map business={business} setBusiness={setBusiness} />} />
-                  <Route path="Create" element={<Create />} />
-                  <Route path="Chat" element={<Chat />} />
-                  <Route path="signup" element={<SignUp />} />
-                  <Route path="login" element={<LogIn />} />
-                  <Route path="restaurant" element={<RestaurantDetails business={business} />} />
-                  <Route path="authentication" element={<Authentication />} />
-                </Routes>
+          <postContext.Provider value={memoziedPost}>
+            <BrowserRouter>
+              <div className="App">
+                <div className="posts">
+                  <Routes>
+                    <Route path="/" element={<Post isEdit={isEdit} setIsEdit={setIsEdit} />} />
+                    <Route path="Map" element={<Map business={business} setBusiness={setBusiness} />} />
+                    <Route path="Create" element={<Create />} />
+                    <Route path="Chat" element={<Chat />} />
+                    <Route path="signup" element={<SignUp />} />
+                    <Route path="login" element={<LogIn />} />
+                    <Route path="restaurant" element={<RestaurantDetails business={business} />} />
+                    <Route path="authentication" element={<Authentication />} />
+                  </Routes>
+                </div>
               </div>
-            </div>
 
-            <nav className="nav_icon">
-              <NavLink to="/">
-                <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
-              </NavLink>
-              <NavLink to="Map">
-                <img onClick={clearMapData} alt="icon" className="map_icon" src="icons/locationicon.svg" />
-              </NavLink>
-              <NavLink to="Create">
-                <img alt="icon" className="post_icon" src="icons/post-new.svg" />
-              </NavLink>
-              <NavLink to="Chat">
-                <img alt="icon" className="chat_icon" src="icons/txt.svg" />
-              </NavLink>
-              <NavLink to="signup">
-                <img alt="icon" className="profile_icon" src="icons/profile.svg" />
-              </NavLink>
-            </nav>
-          </BrowserRouter>
+              <nav className="nav_icon">
+                <NavLink to="/">
+                  <img onClick={onClick} alt="icon" className="home_icon" src="/icons/home.svg" />
+                </NavLink>
+                <NavLink to="Map">
+                  <img onClick={clearMapData} alt="icon" className="map_icon" src="icons/locationicon.svg" />
+                </NavLink>
+                <NavLink to="Create">
+                  <img alt="icon" className="post_icon" src="icons/post-new.svg" />
+                </NavLink>
+                <NavLink to="Chat">
+                  <img alt="icon" className="chat_icon" src="icons/txt.svg" />
+                </NavLink>
+                <NavLink to="signup">
+                  <img alt="icon" className="profile_icon" src="icons/profile.svg" />
+                </NavLink>
+              </nav>
+
+            </BrowserRouter>
+          </postContext.Provider>
         </mapDataContext.Provider>
       </loginEmailContext.Provider>
     </logInContext.Provider>

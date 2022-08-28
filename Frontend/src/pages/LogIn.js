@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import axios from "axios";
-import { loginEmailContext, logInContext } from '../App';
+import { loginEmailContext, logInContext, postContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import Authentication from './Authentication';
 
@@ -10,6 +10,7 @@ const LogIn = () => {
     const [password, setPassword] = useState("")
     const { email, setEmail } = useContext(loginEmailContext)
     const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
+    const { posts, setPosts } = useContext(postContext)
     const navigate = useNavigate();
 
 
@@ -38,6 +39,7 @@ const LogIn = () => {
         if (result.data.verified) {
             setIsItLoggedIn(true)
             setEmail(result.data.thisUser)
+            setPosts(result.data.posts)
             navigate('/', { replace: true });
             return
         }

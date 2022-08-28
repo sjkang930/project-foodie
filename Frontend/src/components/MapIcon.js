@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { mapDataContext } from "../App";
-const MapIcon = ({ post_id, posts }) => {
+import { mapDataContext, postContext } from "../App";
+const MapIcon = ({ post_id }) => {
 
     const navigate = useNavigate()
     const { setMapData } = useContext(mapDataContext)

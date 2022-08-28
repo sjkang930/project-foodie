@@ -51,17 +51,14 @@ const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
-    const email = req.session.whoami
-    if (email) {
-        const user = getUserByEmail(email)
-        console.log(user)
+
+    if (req.session.whoami) {
+        const email = req.session.whoami.email
+        const user = await getUserByEmail(email)
+        const user_id = req.session.whoami.user_id
         const posts = await getPosts()
-        res.send(posts, user)
-        return
+        res.send({ posts, user })
     }
-    const posts = await getPosts()
-    res.send(posts)
-    return
 })
 
 app.get('/comments', async (req, res) => {
@@ -92,21 +89,21 @@ app.get('/images/:filename', (req, res) => {
 })
 
 app.post('/create', upload.single('image'), async (req, res) => {
+    console.log(req.session.whoami)
     const { filename } = req.file
     const { description, resName, place } = req.body
     const image_url = `/images/${filename}`
+    const user_id = req.session.whoami.user_id
     // const result = await uploadFile(req.file)
     // console.log("result", result)
     const latitude = place.substring(0, place.indexOf(','))
     const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
-    const post = await createPost(description, image_url, resName, latitude, longitude)
-    console.log("req.body", req.body)
+    const post = await createPost(user_id, description, image_url, resName, latitude, longitude)
     const params = {
         Buket: bucketName,
         Key: req.file.originalname,
         body: req.file.filename,
         ContentType: req.file.mimetype,
-
     }
 
     const command = new PutObjectCommand(params)
@@ -116,6 +113,7 @@ app.post('/create', upload.single('image'), async (req, res) => {
     console.log("response", response)
 
     res.send({
+        user_id,
         description,
         image_url,
         resName,
@@ -125,6 +123,7 @@ app.post('/create', upload.single('image'), async (req, res) => {
 })
 
 app.delete('/delete/:post_id', async (req, res) => {
+
     const post_id = req.params.post_id
     const post = await getPost(post_id)
     if (!post) {
@@ -149,7 +148,6 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
         latitude,
         longitude
     })
-    console.log(req.session.whoami)
 })
 
 app.post('/restaurant', async (req, res) => {
@@ -214,26 +212,20 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body
-
     const users = await getUsers()
     const thisUser = users.find(user => user.email === email)
     if (thisUser) {
         const verified = await bcrypt.compare(password, thisUser.password)
-        req.session.whoami = email
-        res.send({ verified, thisUser, cookiedEmail })
+        const user_id = thisUser.user_id
+        req.session.whoami = thisUser
+        res.send({ verified, thisUser })
         return
     }
     res.send()
 })
 
-app.get('/auth', async (req, res) => {
-    const email = req.session.whoami
-    console.log(email)
-    res.send({ email })
-})
-
 app.get('/userInfo', async (req, res) => {
-    const email = req.session.whoami
+    const email = req.session.whoami.email
     const user = await getUserByEmail(email)
     console.log(user)
     res.send({ user })

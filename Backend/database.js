@@ -58,11 +58,11 @@ export async function getPost(post_id) {
     return rows
 }
 
-export async function createPost(description, filename, resName, latitude, longitude) {
+export async function createPost(user_id, description, filename, resName, latitude, longitude) {
     const [result] = await pool.query(`
-    INSERT INTO posts(description, filename, resName, latitude, longitude)
-    VALUES(?,?,?,?,?)
-    `, [description, filename, resName, latitude, longitude])
+    INSERT INTO posts(user_id, description, filename, resName, latitude, longitude)
+    VALUES(?,?,?,?,?,?)
+    `, [user_id, description, filename, resName, latitude, longitude])
     const post_id = result.insertId
     return getPost(post_id)
 }

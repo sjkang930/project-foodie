@@ -1,21 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import axios from 'axios'
 import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
 import Edit from "../components/Edit";
 import MapIcon from "../components/MapIcon";
-import { mapDataContext, logInContext, loginEmailContext } from "../App";
+import { mapDataContext, logInContext, loginEmailContext, postContext } from "../App";
 import LogIn from "./LogIn";
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ isEdit, setIsEdit }) => {
     const { setMapData } = useContext(mapDataContext)
     const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
     const { email, setEmail } = useContext(loginEmailContext)
     const [isLike, setIsLike] = useState(false);
-    const [posts, setPosts] = useState([]);
+    const { posts, setPosts } = useContext(postContext)
     const [newPost, setNewPost] = useState("")
+    const navigate = useNavigate()
+    const imgClick = () => {
+        navigate('/', { replace: true });
+    }
 
-    useEffect(() => {
+    useMemo(() => {
         (async () => {
             const result = await axios.get('/posts')
             setPosts(result.data.posts)
@@ -43,7 +48,7 @@ const Post = ({ isEdit, setIsEdit }) => {
                         <div className="head_logo">
                             <header>
                                 <h2>
-                                    <a href="/"><img src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' /></a>
+                                    <img onClick={imgClick} src='https://ifh.cc/g/9qtKfn.png' alt="logo" border='0' />
                                 </h2>
                             </header>
                         </div><div div className="posts">
@@ -92,7 +97,7 @@ const Post = ({ isEdit, setIsEdit }) => {
                                                     <img alt="share" src="/icons/share.svg" />
                                                 </div>
                                             </div>
-                                            <MapIcon post_id={post.post_id} setMapData={setMapData} posts={posts} />
+                                            <MapIcon post_id={post.post_id} setMapData={setMapData} />
                                         </div>
                                     </section>
                                     <section className="user_name_description">
@@ -108,7 +113,7 @@ const Post = ({ isEdit, setIsEdit }) => {
                             ))}
                         </div>
                     </> :
-                    <Edit newPost={newPost} posts={posts} setPosts={setPosts} isEdit={isEdit} setIsEdit={setIsEdit} />}
+                    <Edit newPost={newPost} isEdit={isEdit} setIsEdit={setIsEdit} />}
             </>
             : <LogIn />}
         </>

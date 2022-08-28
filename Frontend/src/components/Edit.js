@@ -3,9 +3,9 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchRestaurant from '../components/SearchRestaurant'
 import Head from '../components/Head'
-import { logInContext } from "../App";
+import { logInContext, postContext } from "../App";
 import LogIn from "../pages/LogIn";
-const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
+const Edit = ({ newPost, isEdit, setIsEdit }) => {
     const descriptionInput = useRef();
     const { isItLoggedIn, setIsItLoggedIn } = useContext(logInContext)
     const fileRef = useRef(null);
@@ -16,6 +16,7 @@ const Edit = ({ newPost, isEdit, setIsEdit, setPosts, posts }) => {
     const navigate = useNavigate();
     const { post_id } = newPost
     const [imageSrc, setImageSrc] = useState('');
+    const { posts, setPosts } = useContext(postContext)
 
     useEffect(() => {
         setDescription(newPost.description)

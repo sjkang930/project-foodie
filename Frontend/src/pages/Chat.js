@@ -7,7 +7,7 @@ const Chat = () => {
 
     useEffect(() => {
         (async () => {
-            const result = await axios.get('/auth')
+            const result = await axios.get('/userInfo')
             if (result.data.email) {
                 setIsItLoggedIn(true)
             }

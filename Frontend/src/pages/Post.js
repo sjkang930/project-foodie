@@ -4,7 +4,6 @@ import Comment from "../components/Comment";
 import MoreButtons from "../components/MoreButtons";
 import Edit from "../components/Edit";
 import MapIcon from "../components/MapIcon";
-import Head from "../components/Head";
 import { mapDataContext, logInContext, loginEmailContext } from "../App";
 import LogIn from "./LogIn";
 

@@ -1,19 +1,23 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { loginEmailContext } from "../App";
 
 const CommentList = ({ comments, setComments, post_id }) => {
+    const { email, setEmail } = useContext(loginEmailContext)
     const [editComment, setEditComment] = useState(false);
     const [thisComment_id, setThisComment_id] = useState("")
-
     const cancelBtn = () => {
         setEditComment(!editComment)
     }
     const commentClick = (targetId) => {
         setThisComment_id(targetId)
         setEditComment(!editComment)
-        // console.log(editComment)
     }
-    const deleteBtn = async (id) => {
+    const deleteBtn = async (id, user_id) => {
+        if (user_id !== email.user_id) {
+            window.confirm("You can not access!")
+            return
+        }
         if (window.confirm("Are you sure you want to delete it?")) {
             setComments(comments.filter(it => it.comment_id !== id))
             await axios.delete(`/comments/${id}`)
@@ -39,7 +43,7 @@ const CommentList = ({ comments, setComments, post_id }) => {
                                                 </button>
                                                     <button
                                                         onClick={() => {
-                                                            deleteBtn(it.comment_id);
+                                                            deleteBtn(it.comment_id, it.user_id);
                                                         }}>delete
                                                     </button>
                                                 </> : ""

@@ -1,6 +1,5 @@
-import React, { useState, useCallback, useEffect, useMemo, useContext } from 'react';
-import { GoogleMap, Marker, useJsApiLoader, InfoWindow, useLoadScript } from '@react-google-maps/api';
-import GoogleMapReact from 'google-map-react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
+import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
 import Head from '../components/Head';
 import RestaurantInfo from '../components/RestaurantInfo';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +17,7 @@ const Map = ({ business, setBusiness }) => {
     const navigate = useNavigate()
     const { mapData } = useContext(mapDataContext)
     const [markers, setMarkers] = useState([])
-    const [center, setCenter] = useState({ lat: 49.2835, lng: -123.1153 })
+    const [center] = useState({ lat: 49.2835, lng: -123.1153 })
     const [selected, setSelected] = useState(null)
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: 'AIzaSyAcaYDEWjjYRwiUJACWEOHC_HA32gaO7k0',

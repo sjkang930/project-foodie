@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { loginEmailContext } from "../App";
 
 const CommentList = ({ comments, setComments, post_id }) => {
-    const { email, setEmail } = useContext(loginEmailContext)
+    const { email } = useContext(loginEmailContext)
     const [editComment, setEditComment] = useState(false);
     const [thisComment_id, setThisComment_id] = useState("")
     const cancelBtn = () => {
@@ -35,7 +35,7 @@ const CommentList = ({ comments, setComments, post_id }) => {
                                 <div className="comment_btn_div">
                                     <>
                                         {
-                                            (it.comment_id == thisComment_id && editComment) ?
+                                            (it.comment_id === thisComment_id && editComment) ?
                                                 <>< button
                                                     onClick={() => {
                                                         cancelBtn();

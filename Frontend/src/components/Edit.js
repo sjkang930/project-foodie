@@ -41,6 +41,7 @@ const Edit = ({ newPost, isEdit, setIsEdit }) => {
         }
         if (!file) {
             fileRef.current.focus();
+            window.confirm("please choose file");
             return;
         }
         const data = new FormData()

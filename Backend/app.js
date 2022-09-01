@@ -35,7 +35,6 @@ app.use(cookieSession({
 }))
 
 
-
 app.get('/posts', async (req, res) => {
     if (req.session.whoami) {
         const email = req.session.whoami.email
@@ -118,7 +117,9 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
     const { description, resName, place } = req.body
     const latitude = place.substring(0, place.indexOf(','))
     const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
-    const image_url = `/images/${filename}`
+    const url = await uploadFile(req.file)
+    console.log("url.key", url)
+    const image_url = `https://app3000-react-idsp.s3.us-west-2.amazonaws.com/${url.Key}`
     const post = await updatePost(description, `/images/${filename}`, resName, latitude, longitude, post_id)
     res.send({
         description,
@@ -216,6 +217,11 @@ app.get('/userInfo', async (req, res) => {
 app.post('/logout', async (req, res) => {
     res.clearCookie("whoami");
     res.clearCookie("whoami.sig");
+})
+
+app.use(express.static('build'))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build/index.html'))
 })
 
 app.use(function (err, req, res, next) {

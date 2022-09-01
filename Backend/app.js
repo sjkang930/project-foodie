@@ -2,34 +2,21 @@ import express from 'express'
 import { getPosts, getPost, createComment, createPost, getComments, getAllComments, updatePost, deletePost, deleteComment, createUser, getUsers, getUser, getUserByEmail } from './database.js'
 import dotenv from 'dotenv'
 import multer from 'multer'
-import fs, { copyFileSync } from 'fs'
-import * as path from 'path'
+import fs from 'fs'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios'
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import cookieSession from "cookie-session"
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
-const bucketName = process.env.AWS_BUCKET_NAME
-const bucketRegion = process.env.AWS_BUCKET_REGION
-const accessKeyId = process.env.AWS_ACCESS_KEY
-const secretAcessKey = process.env.AWS_SECRET_KEY
-
-const s3 = new S3Client({
-    credentials: {
-        accessKeyId,
-        secretAcessKey,
-    },
-    region: bucketRegion
-})
+import { uploadFile, getFileStream } from "./s3.js"
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
+
+const upload = multer({ dest: 'uploads/' })
 dotenv.config();
 app.use(express.json());
 
@@ -47,8 +34,6 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000 //24hrs
 }))
 
-const storage = multer.memoryStorage()
-const upload = multer({ dest: 'uploads/' })
 
 app.get('/posts', async (req, res) => {
     if (req.session.whoami) {
@@ -86,34 +71,24 @@ app.post('/posts', async (req, res) => {
 
 app.get('/images/:filename', (req, res) => {
     const filename = req.params.filename
-    const readStream = fs.createReadStream(path.join(__dirname, 'uploads', filename))
+    const readStream = getFileStream(filename)
     readStream.pipe(res)
 })
 
 app.post('/create', upload.single('image'), async (req, res) => {
     if (req.session.whoami) {
-        const { filename } = req.file
+        const { filename, path } = req.file
         const { description, resName, place } = req.body
-        const image_url = `/images/${filename}`
         const user_id = req.session.whoami.user_id
-        // const result = await uploadFile(req.file)
-        // console.log("result", result)
+        const url = await uploadFile(req.file)
+        console.log("url.key", url)
+        const image_url = `https://app3000-react-idsp.s3.us-west-2.amazonaws.com/${url.Key}`
+        console.log("req.file", req.file)
+        console.log("req.body", req.body)
+
         const latitude = place.substring(0, place.indexOf(','))
         const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
         const post = await createPost(user_id, description, image_url, resName, latitude, longitude)
-        const params = {
-            Buket: bucketName,
-            Key: req.file.originalname,
-            body: req.file.filename,
-            ContentType: req.file.mimetype,
-        }
-
-        const command = new PutObjectCommand(params)
-        console.log("s3", s3.middlewareStack)
-        const middlewareStack = s3.middlewareStack
-        const response = middlewareStack.add(command)
-        console.log("response", response)
-
         res.send({
             user_id,
             description,
@@ -142,7 +117,9 @@ app.put('/edit/:post_id', upload.single('image'), async (req, res) => {
     const { description, resName, place } = req.body
     const latitude = place.substring(0, place.indexOf(','))
     const longitude = place.substring(place.indexOf(',') + 1, place.lastIndexOf(''))
-    const image_url = `/images/${filename}`
+    const url = await uploadFile(req.file)
+    console.log("url.key", url)
+    const image_url = `https://app3000-react-idsp.s3.us-west-2.amazonaws.com/${url.Key}`
     const post = await updatePost(description, `/images/${filename}`, resName, latitude, longitude, post_id)
     res.send({
         description,
@@ -235,6 +212,16 @@ app.get('/userInfo', async (req, res) => {
         console.log(user)
         res.send({ user })
     }
+})
+
+app.post('/logout', async (req, res) => {
+    res.clearCookie("whoami");
+    res.clearCookie("whoami.sig");
+})
+
+app.use(express.static('build'))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build/index.html'))
 })
 
 app.use(function (err, req, res, next) {
